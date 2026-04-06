@@ -152,6 +152,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .search-box {
@@ -180,6 +181,7 @@
             color: #1e3c72;
             font-weight: 500;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
@@ -194,6 +196,11 @@
 
         .section {
             margin-bottom: 3rem;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
         }
 
         .section h2 {
@@ -324,7 +331,7 @@
             <div class="header-content">
                 <div>
                     <h1>📋 Guia de Processos</h1>
-                    <p class="subtitle">Secretaria do Programa de Pós-Graduação em Comunicação Social (PPGCOM)</p>
+                    <p class="subtitle">Secretaria do Programa de Pós-Graduação em Comunicação Social</p>
                 </div>
                 <button class="logout-btn" onclick="logout()">Sair</button>
             </div>
@@ -336,27 +343,168 @@
                     <input type="text" id="searchInput" placeholder="🔍 Buscar processo...">
                 </div>
                 <ul class="nav-links">
-                    <li><a href="#programa">Programa</a></li>
-                    <li><a href="#alunos">Alunos</a></li>
-                    <li><a href="#disciplinas">Disciplinas</a></li>
-                    <li><a href="#bancas">Bancas</a></li>
-                    <li><a href="#bolsas">Bolsas</a></li>
-                    <li><a href="#outros">Outros</a></li>
-                    <li><a href="#contato">Contato</a></li>
+                    <li><a onclick="showSection('programa')">Programa</a></li>
+                    <li><a onclick="showSection('alunos')">Alunos</a></li>
+                    <li><a onclick="showSection('disciplinas')">Disciplinas</a></li>
+                    <li><a onclick="showSection('bancas')">Bancas</a></li>
+                    <li><a onclick="showSection('bolsas')">Bolsas</a></li>
+                    <li><a onclick="showSection('outros')">Outros</a></li>
                 </ul>
             </div>
         </nav>
 
         <div class="container">
-            <section class="section">
-                <h2>✅ Site Protegido com Sucesso!</h2>
-                <p>Você está acessando o Guia de Processos da Secretaria PPGCOM com proteção por senha.</p>
-                <p><strong>Senha:</strong> @Famecos</p>
+            <!-- Seção Programa -->
+            <section id="programa" class="section active">
+                <h2>📚 Programa</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Informações Gerais</h3>
+                        <p>Conceito CAPES 7 - Excelência Internacional</p>
+                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
+                        <div class="details">
+                            <h4>Sobre o Programa:</h4>
+                            <ul>
+                                <li>30 anos de história</li>
+                                <li>3 linhas de pesquisa principais</li>
+                                <li>Mais de 10 grupos de pesquisa</li>
+                                <li>Aulas no período noturno</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção Alunos -->
+            <section id="alunos" class="section">
+                <h2>👥 Alunos</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Tipos de Alunos</h3>
+                        <p>Regulares, Especiais, Convênios, G-PG, G+1</p>
+                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
+                        <div class="details">
+                            <h4>Modalidades:</h4>
+                            <ul>
+                                <li><strong>Alunos Regulares:</strong> Processo seletivo padrão</li>
+                                <li><strong>Alunos Especiais:</strong> Disciplinas isoladas</li>
+                                <li><strong>Convênios:</strong> Acordos internacionais</li>
+                                <li><strong>G-PG:</strong> Alunos de graduação</li>
+                                <li><strong>G+1:</strong> Programa de aceleração</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção Disciplinas -->
+            <section id="disciplinas" class="section">
+                <h2>📖 Disciplinas</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Requisitos de Créditos</h3>
+                        <p>Informações sobre aproveitamento e validação</p>
+                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
+                        <div class="details">
+                            <h4>Créditos Obrigatórios:</h4>
+                            <ul>
+                                <li>Mestrado: mínimo de créditos em disciplinas</li>
+                                <li>Doutorado: requisitos adicionais</li>
+                                <li>Aproveitamento de créditos de outras instituições</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção Bancas -->
+            <section id="bancas" class="section">
+                <h2>🎓 Bancas</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Qualificação</h3>
+                        <p>Processo de qualificação para mestrado e doutorado</p>
+                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
+                        <div class="details">
+                            <h4>Prazos:</h4>
+                            <ul>
+                                <li>Mestrado: 6 a 12 meses</li>
+                                <li>Doutorado: conforme cronograma</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Defesa</h3>
+                        <p>Processo de defesa de dissertação/tese</p>
+                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
+                        <div class="details">
+                            <h4>Requisitos:</h4>
+                            <ul>
+                                <li>Aprovação em qualificação</li>
+                                <li>Cumprimento de créditos</li>
+                                <li>Proficiência em idiomas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção Bolsas -->
+            <section id="bolsas" class="section">
+                <h2>💰 Bolsas</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Processo de Bolsas</h3>
+                        <p>Informações sobre seleção e manutenção</p>
+                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
+                        <div class="details">
+                            <h4>Tipos de Bolsas:</h4>
+                            <ul>
+                                <li>CAPES</li>
+                                <li>CNPq</li>
+                                <li>Bolsas institucionais</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção Outros -->
+            <section id="outros" class="section">
+                <h2>⚙️ Outros Processos</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Prorrogação de Prazo</h3>
+                        <p>Procedimento para solicitar extensão</p>
+                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
+                        <div class="details">
+                            <h4>Requisitos:</h4>
+                            <ul>
+                                <li>Justificativa formal</li>
+                                <li>Aprovação da coordenação</li>
+                                <li>Análise de andamento</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Trancamento de Matrícula</h3>
+                        <p>Como solicitar trancamento temporário</p>
+                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
+                        <div class="details">
+                            <h4>Procedimento:</h4>
+                            <ul>
+                                <li>Solicitação formal</li>
+                                <li>Aprovação do orientador</li>
+                                <li>Registro no sistema</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
 
         <footer>
-            <p>&copy; 2026 Secretaria do PPGCOM - PUCRS. Todos os direitos reservados.</p>
+            <p>&copy; 2026 Secretaria do PPGCOM. Todos os direitos reservados.</p>
         </footer>
     </div>
 
@@ -385,6 +533,28 @@
             document.getElementById('passwordInput').value = '';
         }
 
+        function showSection(sectionId) {
+            // Esconder todas as seções
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Mostrar a seção selecionada
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+        }
+
+        function toggleDetails(button) {
+            const details = button.nextElementSibling;
+            if (details && details.classList.contains('details')) {
+                details.classList.toggle('show');
+                button.textContent = details.classList.contains('show') ? 'Ocultar Detalhes' : 'Ver Detalhes';
+            }
+        }
+
         // Verificar autenticação ao carregar a página
         window.addEventListener('load', function() {
             const autenticado = localStorage.getItem('ppgcom_autenticado');
@@ -395,6 +565,17 @@
                 document.getElementById('loginContainer').style.display = 'flex';
                 document.getElementById('mainContent').classList.remove('show');
             }
+        });
+
+        // Busca funcional
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
         });
     </script>
 </body>

@@ -49,6 +49,16 @@
             font-size: 0.95rem;
         }
 
+        .error-message {
+            display: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+
         .login-box input {
             width: 100%;
             padding: 0.8rem;
@@ -56,12 +66,6 @@
             border: 2px solid #ddd;
             border-radius: 5px;
             font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .login-box input:focus {
-            outline: none;
-            border-color: #1e3c72;
         }
 
         .login-box button {
@@ -78,13 +82,6 @@
 
         .login-box button:hover {
             transform: translateY(-2px);
-        }
-
-        .error-message {
-            color: #d32f2f;
-            margin-bottom: 1rem;
-            display: none;
-            font-size: 0.9rem;
         }
 
         /* Conteúdo Principal */
@@ -117,23 +114,24 @@
             margin-bottom: 0.5rem;
         }
 
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 1px solid white;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
         .subtitle {
             font-size: 1rem;
             opacity: 0.9;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: white;
+            color: #1e3c72;
         }
 
         nav {
@@ -211,82 +209,48 @@
             padding-bottom: 0.5rem;
         }
 
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+        .section h3 {
+            color: #2a5298;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
 
-        .card {
+        .section h4 {
+            color: #1e3c72;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .section ul, .section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .section strong {
+            color: #1e3c72;
+        }
+
+        .content-block {
             background: white;
-            padding: 1.5rem;
+            padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .card h3 {
-            color: #1e3c72;
-            margin-bottom: 0.5rem;
-        }
-
-        .card p {
-            color: #666;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-
-        .card button {
-            background: #2a5298;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .card button:hover {
-            background: #1e3c72;
-        }
-
-        .details {
-            background: #f9f9f9;
-            padding: 1.5rem;
-            border-left: 4px solid #2a5298;
-            margin-top: 1rem;
-            display: none;
-            border-radius: 5px;
-        }
-
-        .details.show {
-            display: block;
-        }
-
-        .details h4 {
-            color: #1e3c72;
-            margin-top: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .details ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .details li {
-            margin-bottom: 0.5rem;
-            color: #555;
+            margin-bottom: 2rem;
         }
 
         footer {
-            background: #333;
+            background-color: #333;
             color: white;
             text-align: center;
             padding: 2rem;
@@ -298,6 +262,11 @@
                 font-size: 1.8rem;
             }
 
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
             .nav-content {
                 flex-direction: column;
             }
@@ -307,8 +276,8 @@
                 justify-content: center;
             }
 
-            .cards-grid {
-                grid-template-columns: 1fr;
+            .section h2 {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -343,162 +312,408 @@
                     <input type="text" id="searchInput" placeholder="🔍 Buscar processo...">
                 </div>
                 <ul class="nav-links">
-                    <li><a href="#" onclick="showSection('programa'); return false;">Programa</a></li>
                     <li><a href="#" onclick="showSection('alunos'); return false;">Alunos</a></li>
                     <li><a href="#" onclick="showSection('disciplinas'); return false;">Disciplinas</a></li>
                     <li><a href="#" onclick="showSection('bancas'); return false;">Bancas</a></li>
                     <li><a href="#" onclick="showSection('bolsas'); return false;">Bolsas</a></li>
+                    <li><a href="#" onclick="showSection('estagio'); return false;">Estágio</a></li>
                     <li><a href="#" onclick="showSection('outros'); return false;">Outros</a></li>
                 </ul>
             </div>
         </nav>
 
         <div class="container">
-            <!-- Seção Programa -->
-            <section id="programa" class="section active">
-                <h2>📚 Programa</h2>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h3>Informações Gerais</h3>
-                        <p>Conceito CAPES 7 - Excelência Internacional</p>
-                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
-                        <div class="details">
-                            <h4>Sobre o Programa:</h4>
-                            <ul>
-                                <li>30 anos de história</li>
-                                <li>3 linhas de pesquisa principais</li>
-                                <li>Mais de 10 grupos de pesquisa</li>
-                                <li>Aulas no período noturno</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
             <!-- Seção Alunos -->
-            <section id="alunos" class="section">
-                <h2>👥 Alunos</h2>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h3>Tipos de Alunos</h3>
-                        <p>Regulares, Especiais, Convênios, G-PG, G+1</p>
-                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
-                        <div class="details">
-                            <h4>Modalidades:</h4>
+            <section id="alunos" class="section active">
+                <h2>👥 Processos Relacionados a Alunos</h2>
+                
+                <div class="content-block">
+                    <h3>1.1 Alunos Regulares</h3>
+                    <p><strong>Definição:</strong> São os mestrandos e doutorandos que ingressam no programa de pós-graduação mediante participação e aprovação em um processo seletivo formal.</p>
+                    <h4>Etapas Detalhadas do Processo:</h4>
+                    <ol>
+                        <li><strong>Processo Seletivo:</strong>
                             <ul>
-                                <li><strong>Alunos Regulares:</strong> Processo seletivo padrão</li>
-                                <li><strong>Alunos Especiais:</strong> Disciplinas isoladas</li>
-                                <li><strong>Convênios:</strong> Acordos internacionais</li>
-                                <li><strong>G-PG:</strong> Alunos de graduação</li>
-                                <li><strong>G+1:</strong> Programa de aceleração</li>
+                                <li>O aluno interessado participa do processo seletivo conforme edital específico divulgado pelo programa.</li>
+                                <li><strong>Divulgação e Convites:</strong> A secretaria é responsável pelo envio de e-mails para os candidatos, com atenção especial a possíveis dificuldades de contato (estimado em 5% dos casos).</li>
+                                <li><strong>Plataformas Digitais:</strong> A divulgação e a gestão do processo seletivo utilizam plataformas web, incluindo formulários específicos (disponíveis tipicamente em novembro/maio), informações detalhadas via portal do PPGCOM, links específicos para inscrição, a agenda da PROPPG e o sistema SISACAD para acompanhamento.</li>
                             </ul>
-                        </div>
-                    </div>
+                        </li>
+                        <li><strong>Aprovação:</strong> Após a conclusão do processo seletivo e a análise da comissão avaliadora, o aluno é considerado apto a ingressar no PPGCOM, tendo seu nome publicado na lista de aprovados.</li>
+                        <li><strong>Matrícula:</strong> O aluno aprovado realiza a matrícula no período estipulado pelo calendário acadêmico, formalizando seu vínculo com o programa.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>1.2 Alunos Especiais</h3>
+                    <p><strong>Definição:</strong> Graduados e pós-graduados que manifestam interesse em cursar disciplinas isoladas no PPGCOM, sem a intenção de ingressar formalmente em um programa de mestrado ou doutorado.</p>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong>
+                            <ul>
+                                <li>A solicitação deve ser realizada dentro de um período pré-definido, conforme o calendário acadêmico.</li>
+                                <li>O interessado deve preencher um requerimento específico, disponível na página do PPGCOM.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Documentação Necessária:</strong> Junto ao requerimento, o aluno deve anexar:
+                            <ul>
+                                <li>Diploma e Histórico de Graduação.</li>
+                                <li>Documento de Identidade (RG) e Cadastro de Pessoa Física (CPF).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Análise da Comissão:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a documentação e o requerimento apresentado.</li>
+                        <li><strong>Deferimento e Cadastro no SIPÓS:</strong>
+                            <ul>
+                                <li>Após o deferimento do pedido pela comissão, a secretaria realiza o cadastro do aluno no sistema SIPÓS.</li>
+                                <li>Procede-se com a reserva de vaga na disciplina de interesse do aluno.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Encaminhamento Financeiro:</strong> A informação da reserva de vaga é encaminhada ao setor financeiro. Este setor é responsável pelo cálculo do valor das mensalidades.</li>
+                        <li><strong>Emissão de Acessos:</strong> Após a confirmação do pagamento, a secretaria solicita a emissão da carteirinha e a liberação dos demais acessos à equipe do Service Desk.</li>
+                    </ol>
+                    <h4>Observações Importantes:</h4>
+                    <ul>
+                        <li>A matrícula deve ser realizada sempre no período de complementação de matrículas.</li>
+                        <li>O aluno especial tem um limite máximo de 12 créditos a serem cursados no total, sendo restrito a um máximo de 6 créditos por semestre.</li>
+                        <li>Não é permitido que o aluno especial se matricule em disciplinas obrigatórias do programa.</li>
+                    </ul>
+                </div>
+
+                <div class="content-block">
+                    <h3>1.3 Convênios</h3>
+                    <p><strong>Definição:</strong> Pós-graduandos vinculados a instituições de ensino que possuem convênio formal e que desejam cursar disciplinas no PPGCOM como parte de seu programa de origem.</p>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong>
+                            <ul>
+                                <li>A solicitação deve ser realizada dentro de um período pré-definido, conforme o calendário acadêmico.</li>
+                                <li>O aluno deve preencher um requerimento específico disponível na página do PPGCOM.</li>
+                                <li>Este requerimento deve ser compartilhado com o PPGCOM da instituição de origem, juntamente com a grade de horários.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Documentação Necessária:</strong>
+                            <ul>
+                                <li>Declaração de matrícula na Instituição de Ensino Superior (IES) conveniada.</li>
+                                <li>Documento de Identidade (RG) e Cadastro de Pessoa Física (CPF).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Análise da Comissão:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a documentação e o requerimento.</li>
+                        <li><strong>Deferimento e Cadastro no SIPÓS:</strong>
+                            <ul>
+                                <li>Após o deferimento do pedido, a secretaria realiza o cadastro do aluno no sistema SIPÓS.</li>
+                                <li>A relação de candidatos é encaminhada à PROPESQ, juntamente com o documento do convênio atualizado.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Reserva de Vagas e Matrícula:</strong> Após o deferimento, a secretaria realiza a reserva de vagas e efetiva a matrícula do aluno.</li>
+                        <li><strong>Emissão de Acessos:</strong> Após a efetivação da matrícula, solicita-se a emissão da carteirinha e a liberação dos demais acessos.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>1.4 G-PG (Graduação para Pós-Graduação)</h3>
+                    <p><strong>Definição:</strong> Modalidade destinada a alunos de graduação que têm a oportunidade de cursar disciplinas de mestrado e doutorado. Os créditos obtidos podem ser aproveitados posteriormente.</p>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Manifestação de Interesse:</strong> O ingresso via G-PG ocorre através da manifestação de interesse do aluno dentro do período de candidatura disponibilizado pela PROPESQ.</li>
+                        <li><strong>Matrícula:</strong> O aluno desta modalidade realizará a matrícula no período de complementação do Stricto Sensu.</li>
+                        <li><strong>Documentação para Registro:</strong>
+                            <ul>
+                                <li>Comprovante de matrícula na graduação.</li>
+                                <li>Histórico acadêmico da graduação.</li>
+                                <li>Documento de Identidade (RG) e Cadastro de Pessoa Física (CPF).</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>1.5 G+1</h3>
+                    <p><strong>Definição:</strong> Modalidade que permite ao aluno de graduação antecipar créditos (entre 12 e 18) em disciplinas do Programa de Pós-Graduação durante sua graduação. Esses créditos podem reduzir o tempo de conclusão do curso de Mestrado.</p>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Ingresso:</strong> O ingresso se dá através de um processo seletivo específico, divulgado pela PROPESQ.</li>
+                        <li><strong>Documentação para Candidatura:</strong> Além do formulário padrão, o candidato deverá anexar:
+                            <ul>
+                                <li>Uma carta de apresentação, detalhando seus interesses e motivações.</li>
+                                <li>O link do currículo Lattes atualizado.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Análise e Entrevista:</strong> Após a análise da documentação, os candidatos selecionados passam por uma entrevista.</li>
+                        <li><strong>Matrícula:</strong> O aluno desta modalidade realizará a matrícula no período de complementação do Stricto Sensu.</li>
+                        <li><strong>Documentação para Registro:</strong>
+                            <ul>
+                                <li>Comprovante de matrícula na graduação.</li>
+                                <li>Histórico acadêmico da graduação.</li>
+                                <li>Documento de Identidade (RG) e Cadastro de Pessoa Física (CPF).</li>
+                            </ul>
+                        </li>
+                    </ol>
                 </div>
             </section>
 
             <!-- Seção Disciplinas -->
             <section id="disciplinas" class="section">
-                <h2>📖 Disciplinas</h2>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h3>Requisitos de Créditos</h3>
-                        <p>Informações sobre aproveitamento e validação</p>
-                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
-                        <div class="details">
-                            <h4>Créditos Obrigatórios:</h4>
+                <h2>📖 Processos Relacionados a Disciplinas</h2>
+                
+                <div class="content-block">
+                    <h3>2.1 Criação/Alteração de Disciplinas</h3>
+                    <h4>Fluxo de Tramitação:</h4>
+                    <ol>
+                        <li><strong>Comissão Coordenadora do PPGCOM:</strong> Inicia o processo de criação de uma nova disciplina ou de alteração de uma disciplina existente.</li>
+                        <li><strong>Decanato da Escola:</strong> A proposta da disciplina tramita pelo Decanato da Escola para análise e aprovação.</li>
+                        <li><strong>PROPESQ:</strong> Após a aprovação do Decanato, a solicitação é encaminhada à PROPESQ para os trâmites finais e registro.</li>
+                    </ol>
+                    <h4>Documentação Necessária:</h4>
+                    <ul>
+                        <li><strong>Formulário Específico:</strong> Disponível no Manual de Procedimentos, devidamente preenchido.</li>
+                        <li><strong>Ata de Reunião:</strong> Ata da reunião da comissão coordenadora com as respectivas deliberações.</li>
+                        <li><strong>Plano de Ensino:</strong> Descrição detalhada da disciplina, contendo objetivos, ementa, metodologia e avaliação.</li>
+                    </ul>
+                    <h4>Observações Importantes:</h4>
+                    <ul>
+                        <li>As criações e alterações de disciplinas devem ser realizadas sempre antes do período de matrículas.</li>
+                    </ul>
+                </div>
+
+                <div class="content-block">
+                    <h3>2.2 Cadastro de Disciplinas</h3>
+                    <p><strong>Responsável:</strong> A secretaria do PPGCOM é responsável por realizar as vinculações das turmas no sistema SIPÓS.</p>
+                    <h4>Procedimento no SIPÓS:</h4>
+                    <ol>
+                        <li><strong>Acesso ao Sistema:</strong> Acessar a aba <code>Cadastro > Turmas > Novo</code> no sistema SIPÓS.</li>
+                        <li><strong>Busca do Código:</strong> Buscar o <code>codcred</code> (código da disciplina) correspondente à disciplina a ser cadastrada.</li>
+                        <li><strong>Preenchimento dos Campos:</strong> Preencher os campos em acordo com as informações do plano de ensino, incluindo:
                             <ul>
-                                <li>Mestrado: mínimo de créditos em disciplinas</li>
-                                <li>Doutorado: requisitos adicionais</li>
-                                <li>Aproveitamento de créditos de outras instituições</li>
+                                <li>Período acadêmico do calendário.</li>
+                                <li>Espaço físico onde a disciplina será ministrada.</li>
+                                <li>Nomes dos docentes responsáveis.</li>
                             </ul>
-                        </div>
-                    </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>2.3 Cancelamento de Disciplinas</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação pelo Aluno:</strong> A formalização do cancelamento deve ocorrer sempre através do portal do aluno.</li>
+                        <li><strong>Assinatura e Deferimento:</strong> O requerimento deverá ser assinado pelo aluno, compartilhado com a secretaria e deferido pela comissão coordenadora.</li>
+                        <li><strong>Registro no SIPÓS:</strong> Após o deferimento, a secretaria realiza o registro do cancelamento no SIPÓS:
+                            <ul>
+                                <li><code>Cadastro > Turmas > Pesquisa > Disciplina > Seleciona o aluno > Preenche a data > Preenche o motivo > Registra</code></li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <h4>Observações Importantes:</h4>
+                    <ul>
+                        <li>Quando a disciplina não pertencer ao PPGCOM, o requerimento deve ser compartilhado com o PPG de vínculo da disciplina.</li>
+                        <li>A solicitação deve respeitar sempre os prazos previstos no calendário acadêmico.</li>
+                    </ul>
+                </div>
+
+                <div class="content-block">
+                    <h3>2.4 Exclusão de Disciplinas</h3>
+                    <p><strong>Responsável:</strong> A exclusão ou cancelamento de disciplina deverá ser sempre deferida pela coordenação do PPGCOM.</p>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Prazo:</strong> Se possível, a exclusão deve ser realizada antes do período de matrículas.</li>
+                        <li><strong>Notificação de Alunos:</strong> Caso haja alunos matriculados, os mesmos deverão ser notificados e excluídos da disciplina.</li>
+                        <li><strong>Registro no SIPÓS:</strong> O procedimento é: <code>Cadastro > Turmas > Pesquisar > Selecionar turma > Excluir</code></li>
+                    </ol>
                 </div>
             </section>
 
             <!-- Seção Bancas -->
             <section id="bancas" class="section">
-                <h2>🎓 Bancas</h2>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h3>Qualificação</h3>
-                        <p>Processo de qualificação para mestrado e doutorado</p>
-                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
-                        <div class="details">
-                            <h4>Prazos:</h4>
+                <h2>🎓 Processos Relacionados a Bancas</h2>
+                
+                <div class="content-block">
+                    <h3>3.1 Qualificação</h3>
+                    <h4>Requisitos para Realização da Banca de Qualificação:</h4>
+                    <ul>
+                        <li>O aluno deverá ter cursado o mínimo de créditos previstos no regulamento do PPGCOM.</li>
+                        <li><strong>Proficiência:</strong> Comprovação de proficiência em língua estrangeira.</li>
+                        <li><strong>Créditos:</strong> Acúmulo de 11 ou 24 créditos, dependendo do nível (Mestrado/Doutorado).</li>
+                        <li><strong>Aceitação:</strong> Todos os requisitos devem ser formalmente aceitos pela comissão coordenadora.</li>
+                    </ul>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Discente:</strong> O discente deverá preencher e assinar o requerimento disponível na página do PPGCOM e compartilhá-lo com o orientador.</li>
+                        <li><strong>Entrega na Secretaria:</strong> O aluno deverá entregar na secretaria o requerimento juntamente com o trabalho a ser qualificado.</li>
+                        <li><strong>Análise da Comissão:</strong> O material entregue será analisado pela comissão coordenadora.</li>
+                        <li><strong>Envio de Convites à Banca:</strong> Se o pedido for deferido, a secretaria tramitará a efetivação do envio dos convites aos membros da banca. O convite incluirá:
                             <ul>
-                                <li>Mestrado: 6 a 12 meses</li>
-                                <li>Doutorado: conforme cronograma</li>
+                                <li>Modelo de parecer a ser preenchido pelos membros da banca.</li>
+                                <li>O trabalho a ser avaliado.</li>
+                                <li>Formulário de cadastro de externo (para docentes convidados).</li>
                             </ul>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>Defesa</h3>
-                        <p>Processo de defesa de dissertação/tese</p>
-                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
-                        <div class="details">
-                            <h4>Requisitos:</h4>
-                            <ul>
-                                <li>Aprovação em qualificação</li>
-                                <li>Cumprimento de créditos</li>
-                                <li>Proficiência em idiomas</li>
-                            </ul>
-                        </div>
-                    </div>
+                        </li>
+                        <li><strong>Registro no SIPÓS:</strong> <code>Cadastro > Alunos > Pesquisa > Seleciona o aluno > Atividades > Qualificação</code></li>
+                    </ol>
+                    <h4>Observações Importantes:</h4>
+                    <ul>
+                        <li>A secretaria é responsável por emitir atestado de participação para os professores convidados.</li>
+                        <li>A banca de qualificação <strong>não é pública</strong>, sendo restrita aos membros da banca, orientador e aluno.</li>
+                    </ul>
+                </div>
+
+                <div class="content-block">
+                    <h3>3.2 Defesa</h3>
+                    <h4>Requisitos para a Defesa Final:</h4>
+                    <ul>
+                        <li>Ter cursado o número mínimo de créditos exigidos.</li>
+                        <li>Ter sido aprovado na qualificação.</li>
+                        <li>Ter proficiência em língua estrangeira comprovada.</li>
+                    </ul>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Discente:</strong> O discente deverá preencher e assinar o requerimento disponível na página do PPGCOM.</li>
+                        <li><strong>Entrega na Secretaria:</strong> O aluno deverá entregar na secretaria o requerimento juntamente com o projeto a ser defendido.</li>
+                        <li><strong>Análise da Comissão:</strong> O material entregue será analisado pela comissão coordenadora.</li>
+                        <li><strong>Envio de Convites e Divulgação:</strong> Se o pedido for deferido, a secretaria tramitará a efetivação do envio dos convites. A secretaria emitirá cartazes de divulgação para a página do PPGCOM e redes sociais, uma vez que a defesa é um evento público.</li>
+                    </ol>
+                    <h4>Pós-Defesa:</h4>
+                    <ul>
+                        <li><strong>Finalização da Bolsa:</strong> Após a defesa, inicia-se o processo de finalização da bolsa, se aplicável.</li>
+                        <li><strong>Envio de E-mail ao Aluno:</strong> A secretaria envia um e-mail com orientações sobre a versão final do trabalho, que deve ser entregue em um prazo de 30 dias após a defesa.</li>
+                        <li><strong>Validação do Orientador:</strong> A versão final do trabalho é submetida à validação do orientador.</li>
+                        <li><strong>Salvamento de Documentos:</strong> Os documentos finais são salvos na pasta do aluno.</li>
+                        <li><strong>Solicitação de Diploma:</strong> A secretaria inicia o processo de solicitação do diploma.</li>
+                        <li><strong>Submissão do Trabalho:</strong> O trabalho final é submetido pelo aluno na plataforma da biblioteca.</li>
+                    </ul>
+                    <h4>Observações Importantes:</h4>
+                    <ul>
+                        <li>A banca de defesa <strong>é pública</strong>, e a divulgação é essencial.</li>
+                        <li>O professor orientador é responsável pelo compartilhamento dos pareceres da banca com a secretaria após a defesa.</li>
+                    </ul>
+                </div>
+
+                <div class="content-block">
+                    <h3>3.3 Finalização da Banca no Sistema</h3>
+                    <p><strong>Responsável:</strong> O professor orientador compartilha os pareceres da banca com a secretaria, que por sua vez registrará a atividade no sistema SIPÓS.</p>
+                    <p><strong>Procedimento no SIPÓS:</strong> <code>Cadastro > Alunos > Pesquisa > Seleciona o aluno > Atividades</code></p>
                 </div>
             </section>
 
             <!-- Seção Bolsas -->
             <section id="bolsas" class="section">
-                <h2>💰 Bolsas</h2>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h3>Processo de Bolsas</h3>
-                        <p>Informações sobre seleção e manutenção</p>
-                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
-                        <div class="details">
-                            <h4>Tipos de Bolsas:</h4>
-                            <ul>
-                                <li>CAPES</li>
-                                <li>CNPq</li>
-                                <li>Bolsas institucionais</li>
-                            </ul>
-                        </div>
-                    </div>
+                <h2>💰 Processos Relacionados a Bolsas</h2>
+                
+                <div class="content-block">
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ul>
+                        <li><strong>Cadastro e Manutenção:</strong> O cadastro inicial e a manutenção das bolsas são realizados pela secretaria no sistema SIPÓS, com renovação semestral obrigatória, conforme as regras das agências de fomento.</li>
+                        <li><strong>Cancelamento:</strong> O cancelamento de bolsas é solicitado formalmente pelo orientador do aluno e deve ser deferido pela comissão coordenadora do PPGCOM.</li>
+                        <li><strong>SIPÓS:</strong> Utilização do sistema SIPÓS para gestão das bolsas.</li>
+                        <li><strong>Consulta no SISACAD:</strong> Realização de consulta no sistema SISACAD para verificar informações acadêmicas dos bolsistas.</li>
+                        <li><strong>Divulgação:</strong> Etapa de divulgação de editais e resultados relacionados às bolsas.</li>
+                        <li><strong>E-mail Boletim de Deferimento:</strong> Envio de e-mail com o boletim de deferimento aos candidatos aprovados.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Seção Estágio -->
+            <section id="estagio" class="section">
+                <h2>🎓 Processos Relacionados a Estágio Docente</h2>
+                
+                <div class="content-block">
+                    <h3>5.0 Estágio Docente</h3>
+                    <h4>Modalidades:</h4>
+                    <ul>
+                        <li><strong>Obrigatório:</strong> Para alunos bolsistas CAPES, conforme regulamentação específica da agência de fomento.</li>
+                        <li><strong>Não Obrigatório:</strong> Para demais alunos que desejam realizar o estágio docente como parte de sua formação.</li>
+                    </ul>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Preenchimento do Termo:</strong> O aluno interessado e o orientador preenchem o termo de compromisso de estágio docente, detalhando as atividades e o período.</li>
+                        <li><strong>Análise e Registro:</strong> O termo é analisado pela comissão coordenadora do PPGCOM e, após aprovação, registrado pela secretaria no sistema apropriado.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>6.0 Credenciamento/Recredenciamento Docente</h3>
+                    <h4>Fluxo de Tramitação:</h4>
+                    <ol>
+                        <li><strong>Comissão Coordenadora:</strong> Inicia o processo de credenciamento de novos docentes ou recredenciamento de docentes existentes.</li>
+                        <li><strong>Decanato da Escola:</strong> A solicitação tramita pelo Decanato da Escola para análise e aprovação.</li>
+                        <li><strong>PROPESQ:</strong> Após a aprovação do Decanato, a solicitação é encaminhada à PROPESQ para os registros finais.</li>
+                    </ol>
+                    <h4>Documentação Necessária:</h4>
+                    <ul>
+                        <li>Formulário específico de credenciamento/recredenciamento.</li>
+                        <li>Currículo Lattes atualizado do docente.</li>
+                        <li>Parecer da comissão coordenadora do PPGCOM, justificando a recomendação.</li>
+                    </ul>
                 </div>
             </section>
 
             <!-- Seção Outros -->
             <section id="outros" class="section">
                 <h2>⚙️ Outros Processos</h2>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h3>Prorrogação de Prazo</h3>
-                        <p>Procedimento para solicitar extensão</p>
-                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
-                        <div class="details">
-                            <h4>Requisitos:</h4>
+                
+                <div class="content-block">
+                    <h3>7.0 Aproveitamento de Créditos</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong> O aluno realiza a solicitação de aproveitamento de créditos via requerimento no portal do aluno.</li>
+                        <li><strong>Documentação:</strong> Junto ao requerimento, o aluno deve anexar:
                             <ul>
-                                <li>Justificativa formal</li>
-                                <li>Aprovação da coordenação</li>
-                                <li>Análise de andamento</li>
+                                <li>Histórico escolar das disciplinas a serem aproveitadas.</li>
+                                <li>Ementas das disciplinas para análise de compatibilidade.</li>
                             </ul>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3>Trancamento de Matrícula</h3>
-                        <p>Como solicitar trancamento temporário</p>
-                        <button onclick="toggleDetails(this)">Ver Detalhes</button>
-                        <div class="details">
-                            <h4>Procedimento:</h4>
+                        </li>
+                        <li><strong>Análise:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a solicitação e a documentação.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>8.0 Prorrogação de Prazo</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong> O aluno realiza a solicitação de prorrogação de prazo via requerimento no portal do aluno.</li>
+                        <li><strong>Documentação:</strong> Junto ao requerimento, o aluno deve anexar:
                             <ul>
-                                <li>Solicitação formal</li>
-                                <li>Aprovação do orientador</li>
-                                <li>Registro no sistema</li>
+                                <li>Justificativa detalhada para a prorrogação do prazo.</li>
+                                <li>Cronograma atualizado das atividades a serem desenvolvidas.</li>
                             </ul>
-                        </div>
-                    </div>
+                        </li>
+                        <li><strong>Análise:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a solicitação.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>9.0 Desligamento</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong> O aluno realiza a solicitação de desligamento do programa via requerimento no portal do aluno.</li>
+                        <li><strong>Ciência do Orientador:</strong> A solicitação deve ter a ciência e, se possível, a assinatura do orientador.</li>
+                        <li><strong>Análise:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a solicitação e formalizar o desligamento.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>10.0 Trancamento de Matrícula</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong> O aluno realiza a solicitação de trancamento de matrícula via requerimento no portal do aluno.</li>
+                        <li><strong>Documentação:</strong> Junto ao requerimento, o aluno deve anexar:
+                            <ul>
+                                <li>Justificativa detalhada para o trancamento.</li>
+                                <li>Ciência e, se possível, a assinatura do orientador.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Análise:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a solicitação.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>11.0 Validação de Diploma</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Abertura de Processo:</strong> O processo de validação de diploma (revalidação de diploma estrangeiro) é aberto via Sistema Eletrônico de Informações (SEI).</li>
+                        <li><strong>Documentação:</strong> O solicitante deve apresentar documentação específica exigida, que inclui o diploma a ser validado, histórico escolar, ementas, entre outros.</li>
+                        <li><strong>Análise:</strong> A análise da validação é realizada por uma comissão composta por três doutores, que avaliarão a equivalência do curso e da instituição de origem.</li>
+                    </ol>
                 </div>
             </section>
         </div>
@@ -520,6 +735,7 @@
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('mainContent').classList.add('show');
                 errorMessage.style.display = 'none';
+                showSection('alunos');
             } else {
                 errorMessage.style.display = 'block';
                 document.getElementById('passwordInput').value = '';
@@ -545,14 +761,9 @@
             if (selectedSection) {
                 selectedSection.classList.add('active');
             }
-        }
-
-        function toggleDetails(button) {
-            const details = button.nextElementSibling;
-            if (details && details.classList.contains('details')) {
-                details.classList.toggle('show');
-                button.textContent = details.classList.contains('show') ? 'Ocultar Detalhes' : 'Ver Detalhes';
-            }
+            
+            // Scroll para o topo
+            window.scrollTo(0, 0);
         }
 
         // Verificar autenticação ao carregar a página
@@ -561,6 +772,7 @@
             if (autenticado === 'true') {
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('mainContent').classList.add('show');
+                showSection('alunos');
             } else {
                 document.getElementById('loginContainer').style.display = 'flex';
                 document.getElementById('mainContent').classList.remove('show');
@@ -570,11 +782,24 @@
         // Busca funcional
         document.getElementById('searchInput').addEventListener('keyup', function(e) {
             const searchTerm = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.card');
+            const sections = document.querySelectorAll('.section');
             
-            cards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            if (searchTerm === '') {
+                // Se a busca está vazia, mostrar a primeira seção
+                sections.forEach(section => section.classList.remove('active'));
+                if (sections.length > 0) sections[0].classList.add('active');
+                return;
+            }
+
+            let foundAny = false;
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    section.classList.add('active');
+                    foundAny = true;
+                } else {
+                    section.classList.remove('active');
+                }
             });
         });
     </script>

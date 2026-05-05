@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Processos - Secretaria PPGCOM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        /* Tela de Login */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .login-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-box h1 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .login-box p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .error-message {
+            display: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .login-box button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Conteúdo Principal */
+        .main-content {
+            display: none;
+        }
+
+        .main-content.show {
+            display: block;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: white;
+            color: #1e3c72;
+        }
+
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-box {
+            padding: 1rem 0;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #2a5298;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #2a5298;
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: #2a5298;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .section h4 {
+            color: #1e3c72;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .section ul, .section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .section strong {
+            color: #1e3c72;
+        }
+
+        .content-block {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-content {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="loginContainer" class="login-container">
+        <div class="login-box">
+            <h1>🔐 Acesso Protegido</h1>
+            <p>Guia de Processos - Secretaria PPGCOM</p>
+            <div id="errorMessage" class="error-message">Senha incorreta. Tente novamente.</div>
+            <input type="password" id="passwordInput" placeholder="Digite a senha" onkeypress="if(event.key==='Enter') login()">
+            <button onclick="login()">Acessar</button>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div id="mainContent" class="main-content">
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>📋 Guia de Processos</h1>
+                    <p class="subtitle">Secretaria do Programa de Pós-Graduação em Comunicação Social</p>
+                </div>
+                <button class="logout-btn" onclick="logout()">Sair</button>
+            </div>
+        </header>
+
+        <nav>
+            <div class="nav-content">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Buscar processo...">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showSection('alunos'); return false;">Alunos</a></li>
+                    <li><a href="#" onclick="showSection('disciplinas'); return false;">Disciplinas</a></li>
+                    <li><a href="#" onclick="showSection('bancas'); return false;">Bancas</a></li>
+                    <li><a href="#" onclick="showSection('bolsas'); return false;">Bolsas</a></li>
+                    <li><a href="#" onclick="showSection('estagio'); return false;">Estágio</a></li>
+                    <li><a href="#" onclick="showSection('outros'); return false;">Outros</a></li>
+                    <li><a href="#" onclick="showSection('manual'); return false;">Manual de Procedimentos</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <!-- Seção Alunos -->
+            <section id="alunos" class="section active">
+                <h2>👥 Processos Relacionados a Alunos</h2>
+                
+                <div class="content-block">
+                    <h3>1.1 Alunos Regulares</h3>
+                    <p><strong>Definição:</strong> São os mestrandos e doutorandos que ingressam no programa de pós-graduação mediante participação e aprovação em um processo seletivo formal.</p>
+                    <h4>Etapas Detalhadas do Processo:</h4>
+                    <ol>
+                        <li><strong>Processo Seletivo:</strong>
+                            <ul>
+                                <li>O aluno interessado participa do processo seletivo conforme edital específico divulgado pelo programa.</li>
+                                <li><strong>Divulgação e Convites:</strong> A secretaria é responsável pelo envio de e-mails para os candidatos, com atenção especial a possíveis dificuldades de contato (estimado em 5% dos casos).</li>
+                                <li><strong>Plataformas Digitais:</strong> A divulgação e a gestão do processo seletivo utilizam plataformas web, incluindo formulários específicos (disponíveis tipicamente em novembro/maio), informações detalhadas via portal do PPGCOM, links específicos para inscrição, a agenda da PROPPG e o sistema SISACAD para acompanhamento.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Aprovação:</strong> Após a conclusão do processo seletivo e a análise da comissão avaliadora, o aluno é considerado apto a ingressar no PPGCOM, tendo seu nome publicado na lista de aprovados.</li>
+                        <li><strong>Matrícula:</strong> O aluno aprovado realiza a matrícula no período estipulado pelo calendário acadêmico, formalizando seu vínculo com o programa.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>1.2 Alunos Especiais</h3>
+                    <p><strong>Definição:</strong> Graduados e pós-graduados que manifestam interesse em cursar disciplinas isoladas no PPGCOM, sem a intenção de ingressar formalmente em um programa de mestrado ou doutorado.</p>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong>
+                            <ul>
+                                <li>A solicitação deve ser realizada dentro de um período pré-definido, conforme o calendário acadêmico.</li>
+                                <li>O interessado deve preencher um requerimento específico, disponível na página do PPGCOM.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Documentação Necessária:</strong> Junto ao requerimento, o aluno deve anexar:
+                            <ul>
+                                <li>Diploma e Histórico de Graduação.</li>
+                                <li>Documento de Identidade (RG) e Cadastro de Pessoa Física (CPF).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Análise da Comissão:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a documentação e o requerimento apresentado.</li>
+                        <li><strong>Deferimento e Cadastro no SIPÓS:</strong>
+                            <ul>
+                                <li>Após o deferimento do pedido pela comissão, a secretaria realiza o cadastro do aluno no sistema SIPÓS.</li>
+                                <li>Procede-se com a reserva de vaga na disciplina de interesse do aluno.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Encaminhamento Financeiro:</strong> A informação da reserva de vaga é encaminhada ao setor financeiro. Este setor é responsável pelo cálculo do valor das mensalidades.</li>
+                        <li><strong>Emissão de Acessos:</strong> Após a confirmação do pagamento, a secretaria solicita a emissão da carteirinha e a liberação dos demais acessos à equipe do Service Desk.</li>
+                    </ol>
+                    <h4>Observações Importantes:</h4>
+                    <ul>
+                        <li>A matrícula deve ser realizada sempre no período de complementação de matrículas.</li>
+                        <li>O aluno especial tem um limite máximo de 12 créditos a serem cursados no total, sendo restrito a um máximo de 6 créditos por semestre.</li>
+                        <li>Não é permitido que o aluno especial se matricule em disciplinas obrigatórias do programa.</li>
+                    </ul>
+                </div>
+
+                <div class="content-block">
+                    <h3>1.3 Convênios</h3>
+                    <p><strong>Definição:</strong> Pós-graduandos vinculados a instituições de ensino que possuem convênio formal e que desejam cursar disciplinas no PPGCOM como parte de seu programa de origem.</p>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong>
+                            <ul>
+                                <li>A solicitação deve ser realizada dentro de um período pré-definido, conforme o calendário acadêmico.</li>
+                                <li>O aluno deve preencher um requerimento específico disponível na página do PPGCOM.</li>
+                                <li>Este requerimento deve ser compartilhado com o PPGCOM da instituição de origem, juntamente com a grade de horários.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Documentação Necessária:</strong>
+                            <ul>
+                                <li>Declaração de matrícula na Instituição de Ensino Superior (IES) conveniada.</li>
+                                <li>Documento de Identidade (RG) e Cadastro de Pessoa Física (CPF).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Análise da Comissão:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a documentação e o requerimento.</li>
+                        <li><strong>Deferimento e Cadastro no SIPÓS:</strong>
+                            <ul>
+                                <li>Após o deferimento do pedido, a secretaria realiza o cadastro do aluno no sistema SIPÓS.</li>
+                                <li>A relação de candidatos é encaminhada à PROPESQ, juntamente com o documento do convênio atualizado.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Reserva de Vagas e Matrícula:</strong> Após o deferimento, a secretaria realiza a reserva de vagas e efetiva a matrícula do aluno.</li>
+                        <li><strong>Emissão de Acessos:</strong> Após a efetivação da matrícula, solicita-se a emissão da carteirinha e a liberação dos demais acessos.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>1.4 G-PG (Graduação para Pós-Graduação)</h3>
+                    <p><strong>Definição:</strong> Modalidade destinada a alunos de graduação que têm a oportunidade de cursar disciplinas de mestrado e doutorado. Os créditos obtidos podem ser aproveitados posteriormente.</p>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Manifestação de Interesse:</strong> O ingresso via G-PG ocorre através da manifestação de interesse do aluno dentro do período de candidatura disponibilizado pela PROPESQ.</li>
+                        <li><strong>Matrícula:</strong> O aluno desta modalidade realizará a matrícula no período de complementação do Stricto Sensu.</li>
+                        <li><strong>Documentação para Registro:</strong>
+                            <ul>
+                                <li>Comprovante de matrícula na graduação.</li>
+                                <li>Histórico acadêmico da graduação.</li>
+                                <li>Documento de Identidade (RG) e Cadastro de Pessoa Física (CPF).</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>1.5 G+1</h3>
+                    <p><strong>Definição:</strong> Modalidade que permite ao aluno de graduação antecipar créditos (entre 12 e 18) em disciplinas do Programa de Pós-Graduação durante sua graduação. Esses créditos podem reduzir o tempo de conclusão do curso de Mestrado.</p>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Ingresso:</strong> O ingresso se dá através de um processo seletivo específico, divulgado pela PROPESQ.</li>
+                        <li><strong>Documentação para Candidatura:</strong> Além do formulário padrão, o candidato deverá anexar:
+                            <ul>
+                                <li>Uma carta de apresentação, detalhando seus interesses e motivações.</li>
+                                <li>O link do currículo Lattes atualizado.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Análise e Entrevista:</strong> Após a análise da documentação, os candidatos selecionados passam por uma entrevista.</li>
+                        <li><strong>Matrícula:</strong> O aluno desta modalidade realizará a matrícula no período de complementação do Stricto Sensu.</li>
+                        <li><strong>Documentação para Registro:</strong>
+                            <ul>
+                                <li>Comprovante de matrícula na graduação.</li>
+                                <li>Histórico acadêmico da graduação.</li>
+                                <li>Documento de Identidade (RG) e Cadastro de Pessoa Física (CPF).</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Seção Disciplinas -->
+            <section id="disciplinas" class="section">
+                <h2>📖 Processos Relacionados a Disciplinas</h2>
+                
+                <div class="content-block">
+                    <h3>2.1 Criação/Alteração de Disciplinas</h3>
+                    <h4>Fluxo de Tramitação:</h4>
+                    <ol>
+                        <li><strong>Comissão Coordenadora do PPGCOM:</strong> Inicia o processo de criação de uma nova disciplina ou de alteração de uma disciplina existente.</li>
+                        <li><strong>Decanato da Escola:</strong> A proposta da disciplina tramita pelo Decanato da Escola para análise e aprovação.</li>
+                        <li><strong>PROPESQ:</strong> Após a aprovação do Decanato, a solicitação é encaminhada à PROPESQ para os trâmites finais e registro.</li>
+                    </ol>
+                    <h4>Documentação Necessária:</h4>
+                    <ul>
+                        <li><strong>Formulário Específico:</strong> Disponível no Manual de Procedimentos, devidamente preenchido.</li>
+                        <li><strong>Ata de Reunião:</strong> Ata da reunião da comissão coordenadora com as respectivas deliberações.</li>
+                        <li><strong>Plano de Ensino:</strong> Descrição detalhada da disciplina, contendo objetivos, ementa, metodologia e avaliação.</li>
+                    </ul>
+                    <h4>Observações Importantes:</h4>
+                    <ul>
+                        <li>As criações e alterações de disciplinas devem ser realizadas sempre antes do período de matrículas.</li>
+                    </ul>
+                </div>
+
+                <div class="content-block">
+                    <h3>2.2 Cadastro de Disciplinas</h3>
+                    <p><strong>Responsável:</strong> A secretaria do PPGCOM é responsável por realizar as vinculações das turmas no sistema SIPÓS.</p>
+                    <h4>Procedimento no SIPÓS:</h4>
+                    <ol>
+                        <li><strong>Acesso ao Sistema:</strong> Acessar a aba <code>Cadastro > Turmas > Novo</code> no sistema SIPÓS.</li>
+                        <li><strong>Busca do Código:</strong> Buscar o <code>codcred</code> (código da disciplina) correspondente à disciplina a ser cadastrada.</li>
+                        <li><strong>Preenchimento dos Campos:</strong> Preencher os campos em acordo com as informações do plano de ensino, incluindo:
+                            <ul>
+                                <li>Período acadêmico do calendário.</li>
+                                <li>Espaço físico onde a disciplina será ministrada.</li>
+                                <li>Nomes dos docentes responsáveis.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>2.3 Cancelamento de Disciplinas</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação pelo Aluno:</strong> A formalização do cancelamento deve ocorrer sempre através do portal do aluno.</li>
+                        <li><strong>Assinatura e Deferimento:</strong> O requerimento deverá ser assinado pelo aluno, compartilhado com a secretaria e deferido pela comissão coordenadora.</li>
+                        <li><strong>Registro no SIPÓS:</strong> Após o deferimento, a secretaria realiza o registro do cancelamento no SIPÓS:
+                            <ul>
+                                <li><code>Cadastro > Turmas > Pesquisa > Disciplina > Seleciona o aluno > Preenche a data > Preenche o motivo > Registra</code></li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <h4>Observações Importantes:</h4>
+                    <ul>
+                        <li>Quando a disciplina não pertencer ao PPGCOM, o requerimento deve ser compartilhado com o PPG de vínculo da disciplina.</li>
+                        <li>A solicitação deve respeitar sempre os prazos previstos no calendário acadêmico.</li>
+                    </ul>
+                </div>
+
+                <div class="content-block">
+                    <h3>2.4 Exclusão de Disciplinas</h3>
+                    <p><strong>Responsável:</strong> A exclusão ou cancelamento de disciplina deverá ser sempre deferida pela coordenação do PPGCOM.</p>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Prazo:</strong> Se possível, a exclusão deve ser realizada antes do período de matrículas.</li>
+                        <li><strong>Notificação de Alunos:</strong> Caso haja alunos matriculados, os mesmos deverão ser notificados e excluídos da disciplina.</li>
+                        <li><strong>Registro no SIPÓS:</strong> O procedimento é: <code>Cadastro > Turmas > Pesquisar > Selecionar turma > Excluir</code></li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Seção Bancas -->
+            <section id="bancas" class="section">
+                <h2>🎓 Processos Relacionados a Bancas</h2>
+                
+                <div class="content-block">
+                    <h3>3.1 Qualificação</h3>
+                    <h4>Requisitos para Realização da Banca de Qualificação:</h4>
+                    <ul>
+                        <li>O aluno deverá ter cursado o mínimo de créditos previstos no regulamento do PPGCOM.</li>
+                        <li><strong>Proficiência:</strong> Comprovação de proficiência em língua estrangeira.</li>
+                        <li><strong>Créditos:</strong> Acúmulo de 11 ou 24 créditos, dependendo do nível (Mestrado/Doutorado).</li>
+                        <li><strong>Aceitação:</strong> Todos os requisitos devem ser formalmente aceitos pela comissão coordenadora.</li>
+                    </ul>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Discente:</strong> O discente deverá preencher e assinar o requerimento disponível na página do PPGCOM e compartilhá-lo com o orientador.</li>
+                        <li><strong>Entrega na Secretaria:</strong> O aluno deverá entregar na secretaria o requerimento juntamente com o trabalho a ser qualificado.</li>
+                        <li><strong>Análise da Comissão:</strong> O material entregue será analisado pela comissão coordenadora.</li>
+                        <li><strong>Envio de Convites à Banca:</strong> Se o pedido for deferido, a secretaria tramitará a efetivação do envio dos convites aos membros da banca. O convite incluirá:
+                            <ul>
+                                <li>Modelo de parecer a ser preenchido pelos membros da banca.</li>
+                                <li>O trabalho a ser avaliado.</li>
+                                <li>Formulário de cadastro de externo (para docentes convidados).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Registro no SIPÓS:</strong> <code>Cadastro > Alunos > Pesquisa > Seleciona o aluno > Atividades > Qualificação</code></li>
+                    </ol>
+                    <h4>Observações Importantes:</h4>
+                    <ul>
+                        <li>A secretaria é responsável por emitir atestado de participação para os professores convidados.</li>
+                        <li>A banca de qualificação <strong>não é pública</strong>, sendo restrita aos membros da banca, orientador e aluno.</li>
+                    </ul>
+                </div>
+
+                <div class="content-block">
+                    <h3>3.2 Defesa</h3>
+                    <h4>Requisitos para a Defesa Final:</h4>
+                    <ul>
+                        <li>Ter cursado o número mínimo de créditos exigidos.</li>
+                        <li>Ter sido aprovado na qualificação.</li>
+                        <li>Ter proficiência em língua estrangeira comprovada.</li>
+                    </ul>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Discente:</strong> O discente deverá preencher e assinar o requerimento disponível na página do PPGCOM.</li>
+                        <li><strong>Entrega na Secretaria:</strong> O aluno deverá entregar na secretaria o requerimento juntamente com o projeto a ser defendido.</li>
+                        <li><strong>Análise da Comissão:</strong> O material entregue será analisado pela comissão coordenadora.</li>
+                        <li><strong>Envio de Convites e Divulgação:</strong> Se o pedido for deferido, a secretaria tramitará a efetivação do envio dos convites. A secretaria emitirá cartazes de divulgação para a página do PPGCOM e redes sociais, uma vez que a defesa é um evento público.</li>
+                    </ol>
+                    <h4>Pós-Defesa:</h4>
+                    <ul>
+                        <li><strong>Finalização da Bolsa:</strong> Após a defesa, inicia-se o processo de finalização da bolsa, se aplicável.</li>
+                        <li><strong>Envio de E-mail ao Aluno:</strong> A secretaria envia um e-mail com orientações sobre a versão final do trabalho, que deve ser entregue em um prazo de 30 dias após a defesa.</li>
+                        <li><strong>Validação do Orientador:</strong> A versão final do trabalho é submetida à validação do orientador.</li>
+                        <li><strong>Salvamento de Documentos:</strong> Os documentos finais são salvos na pasta do aluno.</li>
+                        <li><strong>Solicitação de Diploma:</strong> A secretaria inicia o processo de solicitação do diploma.</li>
+                        <li><strong>Submissão do Trabalho:</strong> O trabalho final é submetido pelo aluno na plataforma da biblioteca.</li>
+                    </ul>
+                    <h4>Observações Importantes:</h4>
+                    <ul>
+                        <li>A banca de defesa <strong>é pública</strong>, e a divulgação é essencial.</li>
+                        <li>O professor orientador é responsável pelo compartilhamento dos pareceres da banca com a secretaria após a defesa.</li>
+                    </ul>
+                </div>
+
+                <div class="content-block">
+                    <h3>3.3 Finalização da Banca no Sistema</h3>
+                    <p><strong>Responsável:</strong> O professor orientador compartilha os pareceres da banca com a secretaria, que por sua vez registrará a atividade no sistema SIPÓS.</p>
+                    <p><strong>Procedimento no SIPÓS:</strong> <code>Cadastro > Alunos > Pesquisa > Seleciona o aluno > Atividades</code></p>
+                </div>
+            </section>
+
+            <!-- Seção Bolsas -->
+            <section id="bolsas" class="section">
+                <h2>💰 Processos Relacionados a Bolsas</h2>
+                
+                <div class="content-block">
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ul>
+                        <li><strong>Cadastro e Manutenção:</strong> O cadastro inicial e a manutenção das bolsas são realizados pela secretaria no sistema SIPÓS, com renovação semestral obrigatória, conforme as regras das agências de fomento.</li>
+                        <li><strong>Cancelamento:</strong> O cancelamento de bolsas é solicitado formalmente pelo orientador do aluno e deve ser deferido pela comissão coordenadora do PPGCOM.</li>
+                        <li><strong>SIPÓS:</strong> Utilização do sistema SIPÓS para gestão das bolsas.</li>
+                        <li><strong>Consulta no SISACAD:</strong> Realização de consulta no sistema SISACAD para verificar informações acadêmicas dos bolsistas.</li>
+                        <li><strong>Divulgação:</strong> Etapa de divulgação de editais e resultados relacionados às bolsas.</li>
+                        <li><strong>E-mail Boletim de Deferimento:</strong> Envio de e-mail com o boletim de deferimento aos candidatos aprovados.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Seção Estágio -->
+            <section id="estagio" class="section">
+                <h2>🎓 Processos Relacionados a Estágio Docente</h2>
+                
+                <div class="content-block">
+                    <h3>5.0 Estágio Docente</h3>
+                    <h4>Modalidades:</h4>
+                    <ul>
+                        <li><strong>Obrigatório:</strong> Para alunos bolsistas CAPES, conforme regulamentação específica da agência de fomento.</li>
+                        <li><strong>Não Obrigatório:</strong> Para demais alunos que desejam realizar o estágio docente como parte de sua formação.</li>
+                    </ul>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Preenchimento do Termo:</strong> O aluno interessado e o orientador preenchem o termo de compromisso de estágio docente, detalhando as atividades e o período.</li>
+                        <li><strong>Análise e Registro:</strong> O termo é analisado pela comissão coordenadora do PPGCOM e, após aprovação, registrado pela secretaria no sistema apropriado.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>6.0 Credenciamento/Recredenciamento Docente</h3>
+                    <h4>Fluxo de Tramitação:</h4>
+                    <ol>
+                        <li><strong>Comissão Coordenadora:</strong> Inicia o processo de credenciamento de novos docentes ou recredenciamento de docentes existentes.</li>
+                        <li><strong>Decanato da Escola:</strong> A solicitação tramita pelo Decanato da Escola para análise e aprovação.</li>
+                        <li><strong>PROPESQ:</strong> Após a aprovação do Decanato, a solicitação é encaminhada à PROPESQ para os registros finais.</li>
+                    </ol>
+                    <h4>Documentação Necessária:</h4>
+                    <ul>
+                        <li>Formulário específico de credenciamento/recredenciamento.</li>
+                        <li>Currículo Lattes atualizado do docente.</li>
+                        <li>Parecer da comissão coordenadora do PPGCOM, justificando a recomendação.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Seção Outros -->
+            <section id="outros" class="section">
+                <h2>⚙️ Outros Processos</h2>
+                
+                <div class="content-block">
+                    <h3>7.0 Aproveitamento de Créditos</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong> O aluno realiza a solicitação de aproveitamento de créditos via requerimento no portal do aluno.</li>
+                        <li><strong>Documentação:</strong> Junto ao requerimento, o aluno deve anexar:
+                            <ul>
+                                <li>Histórico escolar das disciplinas a serem aproveitadas.</li>
+                                <li>Ementas das disciplinas para análise de compatibilidade.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Análise:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a solicitação e a documentação.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>8.0 Prorrogação de Prazo</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong> O aluno realiza a solicitação de prorrogação de prazo via requerimento no portal do aluno.</li>
+                        <li><strong>Documentação:</strong> Junto ao requerimento, o aluno deve anexar:
+                            <ul>
+                                <li>Justificativa detalhada para a prorrogação do prazo.</li>
+                                <li>Cronograma atualizado das atividades a serem desenvolvidas.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Análise:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a solicitação.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>9.0 Desligamento</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong> O aluno realiza a solicitação de desligamento do programa via requerimento no portal do aluno.</li>
+                        <li><strong>Ciência do Orientador:</strong> A solicitação deve ter a ciência e, se possível, a assinatura do orientador.</li>
+                        <li><strong>Análise:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a solicitação e formalizar o desligamento.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>10.0 Trancamento de Matrícula</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Solicitação:</strong> O aluno realiza a solicitação de trancamento de matrícula via requerimento no portal do aluno.</li>
+                        <li><strong>Documentação:</strong> Junto ao requerimento, o aluno deve anexar:
+                            <ul>
+                                <li>Justificativa detalhada para o trancamento.</li>
+                                <li>Ciência e, se possível, a assinatura do orientador.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Análise:</strong> A comissão coordenadora do PPGCOM é responsável por analisar a solicitação.</li>
+                    </ol>
+                </div>
+
+                <div class="content-block">
+                    <h3>11.0 Validação de Diploma</h3>
+                    <h4>Procedimentos Detalhados:</h4>
+                    <ol>
+                        <li><strong>Abertura de Processo:</strong> O processo de validação de diploma (revalidação de diploma estrangeiro) é aberto via Sistema Eletrônico de Informações (SEI).</li>
+                        <li><strong>Documentação:</strong> O solicitante deve apresentar documentação específica exigida, que inclui o diploma a ser validado, histórico escolar, ementas, entre outros.</li>
+                        <li><strong>Análise:</strong> A análise da validação é realizada por uma comissão composta por três doutores, que avaliarão a equivalência do curso e da instituição de origem.</li>
+                    </ol>
+                </div>
+            </section>
+
+
+            <section id="manual" class="section">
+            <h2>📚 Manual de Procedimentos - PROPESQ</h2>
+            
+            <h3>Introdução</h3>
+            
+            <p>A Pró-Reitoria de Pesquisa e Pós-Graduação (PROPESQ) da PUCRS apresenta seu Manual de Procedimentos destinado aos Decanos das Unidades Acadêmicas, Diretores dos Institutos, Coordenadores de Programas de Pós-Graduação, Coordenadores de Comissões Científicas, Coordenadores de Pesquisa, equipes de secretaria e docentes pesquisadores, com o objetivo de descrever e sistematizar os processos sob responsabilidade desta Pró-Reitoria.</p>
+            
+            <p>Este Manual de Procedimentos está dividido em três capítulos, que refletem os grupos de processos que são vinculados à PROPESQ, assim organizados:</p>
+            
+            <ul>
+            <li>**Capítulo 1** – Voltado aos processos associados à Diretoria de Pesquisa</li>
+            <li>**Capítulo 2** – Voltado aos processos associados à Diretoria de Pós-Graduação</li>
+            <li>**Capítulo 3** – Voltado aos processos associados ao Escritório de Cooperação Internacional</li>
+            </ul>
+            
+            <p>Tendo em vista que o Manual de Procedimentos é atualizado periodicamente, alterações nos formulários podem ocorrer a qualquer momento, sempre que for detectada pela PROPESQ a necessidade de melhoria ou de atualização.</p>
+            
+            <h3>Organograma da PROPESQ</h3>
+            
+            <h4>Estrutura Hierárquica</h4>
+            <ul>
+            <li>Pró-Reitor de Pesquisa e Pós-Graduação</li>
+            </ul>
+            <p>  - Gabinete da PROPESQ</p>
+            <p>  - Assessoria</p>
+            <p>  - Escritório de Cooperação Internacional</p>
+            <p>  - Comunicação</p>
+            <p>  - Diretoria de Pesquisa</p>
+            <p>  - Diretoria de Pós-Graduação</p>
+            <p>  - Unidades Vinculadas de Apoio à Pesquisa - Diretoria de Pesquisa</p>
+            <p>  - Câmara de Pesquisa e Pós-Graduação</p>
+            
+            <h3>1.1 Política de Pesquisa da PUCRS</h3>
+            
+            <p>A Política de Pesquisa tem como objetivo orientar e estabelecer os princípios e diretrizes gerais das atividades de pesquisa desenvolvidas na Pontifícia Universidade Católica do Rio Grande do Sul (PUCRS), promovendo a excelência acadêmica, a inovação e a integridade ética, como parte dos mecanismos de formação integral, à luz da missão Institucional.</p>
+            
+            <h4>1.1.1 Objetivos</h4>
+            
+            <p>A pesquisa na PUCRS busca:</p>
+            
+            <ul>
+            <li>Fomentar, por meio da pesquisa científica, a produção de conhecimento relevante e inovador com impacto na sociedade</li>
+            <li>Garantir o uso eficiente e ético dos recursos destinados à pesquisa</li>
+            <li>Alinhar as atividades de pesquisa aos valores e objetivos descritos no Planejamento Estratégico da PUCRS</li>
+            <li>Contribuir com a formação de recursos humanos qualificados através da pesquisa científica</li>
+            <li>Promover a disseminação responsável dos resultados das pesquisas</li>
+            </ul>
+            
+            <h4>1.1.2 Princípios Gerais</h4>
+            
+            <p>**Ética:** As pesquisas devem respeitar normas éticas e leis nacionais e internacionais, bem como os documentos norteadores institucionais.</p>
+            
+            <p>**Transparência:** Clareza e agilidade nos processos de gestão, financiamento e divulgação de pesquisas.</p>
+            
+            <p>**Sustentabilidade:** Uso responsável dos recursos para minimizar os impactos ambientais e contribuir com a solidez econômico-financeira da Instituição.</p>
+            
+            <p>**Inclusão e diversidade:** Incentivo à participação de grupos diversos em equipes e atividades de pesquisa.</p>
+            
+            <p>**Segurança:** São ofertadas atividades de formação a fim de garantir a segurança e promover boas práticas nos ambientes laboratoriais da PUCRS.</p>
+            
+            <h4>1.1.3 Estrutura Organizacional da Pesquisa</h4>
+            
+            <p>A gestão da pesquisa na PUCRS é conduzida pela Pró-Reitoria de Pesquisa e Pós-Graduação (PROPESQ), por meio da Diretoria de Pesquisa e suas Assessorias, em alinhamento com as outras Pró-Reitorias, Escolas e as respectivas Coordenadorias de Pesquisa e Comissões Científicas.</p>
+            
+            <p>As estruturas de pesquisa são organizadas em Institutos, Centros, Grupos, Núcleos, Laboratórios e Unidades de Apoio à Pesquisa, com a submissão e gerenciamento de projetos de pesquisa através do Sistema de Cadastro e Gerenciamento da Pesquisa da PUCRS, seguindo os fluxos de aprovação em outras instâncias, quando pertinente.</p>
+            
+            <h4>1.1.4 Responsabilidades</h4>
+            
+            <p><strong>Responsabilidades da PUCRS:</strong></p>
+            
+            <p>A PUCRS é responsável por promover um ambiente favorável à pesquisa, incentivando os pesquisadores a desenvolverem projetos que contribuam para o avanço do conhecimento. Além disso, a universidade zela pela integridade ética da pesquisa científica, promovendo uma cultura de boas condutas, atuando na prevenção e no manejo de eventuais desvios éticos no âmbito acadêmico.</p>
+            
+            <p><strong>Responsabilidades dos Pesquisadores:</strong></p>
+            
+            <p>Os pesquisadores devem cadastrar e manter atualizados os projetos e estruturas de pesquisa no Sistema de Cadastro e Gerenciamento da Pesquisa da PUCRS, bem como nas bases científicas pertinentes. Além disso, os pesquisadores que desenvolvem projetos que incluem atividades de acesso ao patrimônio genético nacional ou ao conhecimento tradicional associado ao patrimônio genético devem assinar um termo de compromisso de cadastro do seu projeto junto ao SISGEN, sendo sua obrigação manter atualizadas as informações pertinentes ao acesso realizado.</p>
+            
+            <p>Cabe ao pesquisador buscar e gerir recursos financeiros externos para viabilizar os projetos de pesquisa, cumprindo as normas do órgão financiador. Adicionalmente, devem ser seguidas todas as orientações do Manual de Procedimentos, respeitando as recomendações de integridade acadêmica. Os pesquisadores são igualmente responsáveis pelos estudantes sob sua supervisão e pelos conhecimentos gerados, devendo agir com objetividade, imparcialidade, veracidade e responsabilidade na concepção, proposição e realização de projetos de pesquisa e na comunicação clara dos resultados.</p>
+            
+            <p>Os pesquisadores são responsáveis pela originalidade e autoria dos projetos de pesquisa por eles conduzidos, respondendo por qualquer infração a direitos de terceiros.</p>
+            
+            <h4>1.1.5 Incentivo e Fomento à Pesquisa</h4>
+            
+            <p>A PUCRS estimula seus pesquisadores a captarem recursos financeiros externos para a condução de seus projetos de pesquisa em diversas modalidades, principalmente oriundos das agências de fomento, como a Fundação de Amparo à Pesquisa do Estado do Rio Grande do Sul (FAPERGS), o Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq), a Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES), a Empresa Brasileira de Pesquisa e Inovação (FINEP), além de outros órgãos financiadores nacionais e internacionais.</p>
+            
+            <p>Para apoiar essa iniciativa, a universidade conta com o Escritório de Apoio à Pesquisa, vinculado à Coordenadoria de Projetos e a Agência de Projetos, ambas vinculadas à PROPESQ, que auxiliam na prospectção de oportunidades de fomento e oferecem suporte ao desenvolvimento de projetos de Pesquisa, Desenvolvimento e Inovação (PD&I). A PUCRS também oferece apoio e investe na manutenção e melhoria da infraestrutura de pesquisa, fomentando o compartilhamento de espaços, equipamentos científicos e apoio técnico especializado.</p>
+            
+            <h4>1.1.6 Formação e Capacitação em Pesquisa</h4>
+            
+            <p>A PUCRS promove a formação integral de novos talentos por meio do Programa de Iniciação Científica Júnior, voltado para alunos do ensino médio, e do Programa de Bolsas de Iniciação Científica, destinado a estudantes de graduação, além do Programa Integra Pós (G+1 e G-PG), que visa aproximar alunos da graduação com a pós-graduação. Bolsas de agências de fomento e o Programa Institucional para Inventivo à Pós-Graduação (PRO-Stricto) são disponibilizados para alunos de mestrado e doutorado. A formação continuada pela pesquisa ocorre também por meio da atuação de pesquisadores em diferentes modalidades de estágio pós-doutoral.</p>
+            
+            <p>A universidade também incentiva a participação da comunidade acadêmica em eventos e capacitações, com o objetivo de promover boas práticas em atividades de pesquisa.</p>
+            
+            <p>---</p>
+            
+            <h3>Aguardando mais informações...</h3>
+            
+            <p>(Espaço para adicionar mais conteúdo conforme o usuário compartilhar)</p>
+            
+            <h3>1.2 Horas de Pesquisa</h3>
+            
+            <p>A política de alocação de horas de pesquisa representa um mecanismo importante para a busca da excelência acadêmica, produção científica, revelação de novos talentos, gerenciamento quanto à renovação do quadro de professores/pesquisadores, e das Linhas de Pesquisa, levando-se sempre em consideração as especificidades de áreas às quais os pesquisadores se integram.</p>
+            
+            <h4>1.2.1 Atuação dos Pesquisadores</h4>
+            
+            <p>A política de atribuição de horas de pesquisa está baseada em perfis que caracterizam os pesquisadores, conforme as dimensões de produtividade, credenciamento na Pós-Graduação Stricto Sensu da PUCRS e condução de projetos com financiamento externo.</p>
+            
+            <p>Considerando a atuação do pesquisador nestas dimensões, a política estabelece quatro faixas:</p>
+            
+            <ul>
+            <li>**Pesq 1** – Credenciado em Programa de Pós-Graduação (permanente ou colaborador), possui bolsa de produtividade em pesquisa do CNPq e coordena projeto de pesquisa ativo</li>
+            <li>**Pesq 2** – Credenciado em Programa de Pós-Graduação (permanente ou colaborador) e é coordenador de projeto de pesquisa ativo, com auxílio financeiro externo vigente</li>
+            <li>**Pesq 3** – Credenciado em Programa de Pós-Graduação (permanente ou colaborador) e é coordenador de projeto de pesquisa ativo</li>
+            <li>**Pesq 4** – Coordena projeto de pesquisa em andamento</li>
+            </ul>
+            
+            <p>Para todas as faixas de atuação acima, o pesquisador deverá estar coordenando projetos de pesquisa cadastrados no Sistema de Pesquisas da PUCRS (SIPESQ), aprovados pela Comissão Científica e em andamento.</p>
+            
+            <p>Entende-se por projeto de pesquisa com auxílio financeiro (excluídas as bolsas), aqueles projetos que obtiveram apoio financeiro de agências de fomento nacionais ou internacionais, de órgãos públicos ou privados ou de empresas, devidamente comprovado por termo de concessão, contrato, convênio ou acordo, inserido no SIPESQ.</p>
+            
+            <h4>1.2.2 Condições</h4>
+            
+            <p>As horas de pesquisa são atribuídas em planilha, semestralmente, e estão limitadas no contexto das demais atividades realizadas pelo docente e no total das horas semanais de atividade na PUCRS. A inclusão em uma das quatro faixas é válida pelo período de um semestre, desde que não seja extinto ou modificado o vínculo de trabalho do professor com a PUCRS nesse período. A atribuição de horas de pesquisa se extingue com a extinção do vínculo de trabalho com a Universidade.</p>
+            
+            <p>A comprovação da manutenção em uma faixa é de responsabilidade do pesquisador. Caso o pesquisador não consiga comprovar as condições de manutenção numa determinada faixa ao final do período de seis meses, será informado a respeito e terá um prazo adicional de seis meses para demonstrar o cumprimento dos requisitos na mesma faixa. Decorridos seis meses do prazo adicional concedido, caso o pesquisador permaneça sem condições de comprovar a manutenção na faixa, será indicada nova faixa, de acordo com as condições atendidas, ou o pesquisador deixará de contar com a atribuição de horas de pesquisa em planilha.</p>
+            
+            <p>A solicitação de progressão de faixa pode ser encaminhada a qualquer momento pelo pesquisador; uma vez aprovada, a alteração na atribuição de horas em planilha ocorrerá a partir do semestre seguinte. É imprescindível que o pesquisador mantenha atualizado o Currículo na Plataforma Lattes e o cadastro e informações dos seus projetos no SIPESQ.</p>
+            
+            <h4>1.2.3 Atribuição das Horas de Pesquisa</h4>
+            
+            <p>Os tetos de média de horas de pesquisa serão concedidos, numa primeira etapa, conforme as faixas de atuação:</p>
+            
+            <ul>
+            <li>**PESQ 1:** até 16 horas</li>
+            <li>**PESQ 2:** até 12 horas</li>
+            <li>**PESQ 3:** até 10 horas</li>
+            <li>**PESQ 4:** até 4 horas</li>
+            </ul>
+            
+            <p>O credenciamento em PPG na categoria de docente permanente implica, automaticamente, na atribuição de até 8 horas, denominadas de "Produção Científica", em adição às horas de pesquisa, não cumulativas com o credenciamento simultâneo em mais de um PPG.</p>
+            
+            <h4>1.2.4 Disposições Gerais</h4>
+            
+            <p>Os docentes que possuem regime de trabalho como professores horistas, em caráter excepcional, poderão atuar como coordenadores de projetos de pesquisa, desde que tenham sido aprovados, por meio de edital, na Chamada para o Programa de Apoio à Atuação de Professor em Atividades de Pesquisa na Pós-Graduação da PUCRS, podendo ser disponibilizadas até 10 horas para a realização de atividades de pesquisa.</p>
+            
+            <p>Nos projetos que são acompanhados pela Agência de Projetos da PROPESQ ou pelo Centro de Pesquisa Clínica do Hospital São Lucas, a coordenação ou participação em projetos por professores horistas implica, necessariamente, na previsão de recursos financeiros no próprio projeto para remuneração das horas dedicadas pelo docente às atividades sob sua responsabilidade.</p>
+            
+            <p>Professores Horistas que tiverem projetos aprovados na Chamada para o Programa de Apoio à Atuação de Professores Horistas em Atividades de Pesquisa na PUCRS podem dedicar uma carga horária semanal de acordo com a distribuição de horas determinada pela Comissão de Avaliação quando do julgamento e seleção, considerando-se a disponibilidade de recursos.</p>
+            
+            <p>Docentes que possuem horas em planilha nas rubricas de Agente de Inovação e Núcleo de Inovação Pedagógica (NIP) podem conduzir projeto de pesquisa exclusivamente na área específica da rubrica. Para essas rubricas, caberá ao Comitê Gestor da Escola verificar a aderência do projeto de pesquisa às suas prioridades, bem como se há correspondência com as áreas específicas das mesmas.</p>
+            
+            <p>---</p>
+            
+            <h3>1.3 Estruturas de Pesquisa</h3>
+            
+            <h4>1.3.1 Delineamento Geral das Estruturas de Pesquisa</h4>
+            
+            <p>As Estruturas de Pesquisa da PUCRS estão organizadas de modo a viabilizar a pesquisa científica de excelência, bem como a permitir a interação com outras dimensões da Universidade e da comunidade, maximizando os impactos na sociedade.</p>
+            
+            <p>As Estruturas de Pesquisa da PUCRS estão organizadas em cinco grupos:</p>
+            
+            <ul>
+            <li>Institutos de Pesquisa</li>
+            <li>Centros de Pesquisa</li>
+            <li>Núcleos de Pesquisa</li>
+            <li>Grupos de Pesquisa</li>
+            <li>Laboratórios de Pesquisa</li>
+            </ul>
+            
+            <p>As Estruturas de Pesquisa podem mudar de classificação, em alinhamento com as diretrizes institucionais, a partir de processos de acompanhamento e avaliação pela PROPESQ.</p>
+            
+            <p>As estruturas de pesquisa contam com o suporte das Unidades Especializadas de Apoio Técnico-científico, as quais apresentam capacidade de atendimento multiusuário.</p>
+            
+            <h4>1.3.3 Centro de Apoio ao Desenvolvimento Científico e Tecnológico (IDEIA)</h4>
+            
+            <p>O IDEIA – Centro de Apoio ao Desenvolvimento Científico e Tecnológico, tem origem na década de 1970, onde é implantado com a perspectiva de apoio ao início das atividades do Hospital São Lucas da PUCRS, principalmente com o objetivo de acompanhar a instalação de equipamentos biomédicos.</p>
+            
+            <p>Posteriormente, ao longo dos anos 80, confere origem ao Instituto de Pesquisa Científico e Tecnológico (IPTC), ampliando suas atividades de apoio à pesquisa científica na Universidade. Além disso, e de forma pioneira, passa a estimular a incubação de projetos de pesquisa com foco em tecnologia aplicada.</p>
+            
+            <p>Na segunda década deste século, com a existência de um Parque Científico e Tecnológico – TECNOPUC e uma Incubadora de Empresas – RAIAR, esta Unidade passa a ampliar sua estrutura e escopo, sediando Laboratórios que apresentam transversalidade em várias áreas do conhecimento, implantando de forma pioneira uma plataforma para compartilhamento de equipamentos.</p>
+            
+            <p>Linhas estratégicas de atuação do IDEIA:</p>
+            <ul>
+            <li>Estrutura Organizacional</li>
+            <li>Laboratórios e Centros vinculados</li>
+            <li>Equipe</li>
+            <li>Apoio Científico e Tecnológico - Graduação e Pós-Graduação</li>
+            <li>Compartilhamento de equipamentos</li>
+            <li>Prestação de serviços</li>
+            <li>Centro de Modelos Biológicos Experimentais (CeMBE)</li>
+            </ul>
+            
+            <h4>1.3.4 Requisitos e Procedimentos para Criação de Estruturas de Pesquisa</h4>
+            
+            <p><strong>Grupos de Pesquisa:</strong></p>
+            <ul>
+            <li>Requisitos para a constituição</li>
+            <li>Procedimentos para a constituição</li>
+            <li>Procedimentos para a desativação</li>
+            </ul>
+            
+            <p><strong>Laboratórios de Pesquisa:</strong></p>
+            <ul>
+            <li>Requisitos para a constituição</li>
+            <li>Procedimentos para a constituição</li>
+            <li>Procedimentos para a desativação</li>
+            </ul>
+            
+            <p><strong>Núcleos de Pesquisa:</strong></p>
+            <ul>
+            <li>Requisitos para a constituição</li>
+            <li>Procedimentos para a constituição</li>
+            <li>Procedimentos para a desativação</li>
+            </ul>
+            
+            <p><strong>Centros de Pesquisa:</strong></p>
+            <ul>
+            <li>Requisitos para a constituição</li>
+            <li>Procedimentos para a constituição</li>
+            <li>Extinção</li>
+            </ul>
+            
+            <p>---</p>
+            
+            <h3>1.4 Comissão de Acompanhamento de Práticas de Laboratório (CAPLAB)</h3>
+            
+            <p>A Comissão de Acompanhamento de Práticas de Laboratório (CAPLab) tem por objetivo promover boas práticas laboratoriais nas atividades de ensino, pesquisa e extensão, realizadas em ambientes laboratoriais da Pontifícia Universidade Católica do Rio Grande do Sul.</p>
+            
+            <h4>1.4.1 Atribuições da CAPLAB</h4>
+            
+            <ul>
+            <li>Propor políticas de boas práticas e de segurança nos ambientes de pesquisa da PUCRS</li>
+            <li>Apresentar às unidades universitárias orientações, recomendações, manuais e instruções sobre questões relativas à segurança</li>
+            <li>Atuar como órgão consultivo da Pró-Reitoria de Pesquisa e Pós-Graduação e da Pró-Reitoria de Graduação e Educação Continuada</li>
+            <li>Manter a guarda confidencial de todos os dados e documentos sigilosos</li>
+            <li>Receber ou requerer informações relacionadas às atividades praticadas nos laboratórios</li>
+            <li>Apoiar o SESMT nos planos ou rotinas de segurança implementadas</li>
+            <li>Apoiar a Comissão de Ética no Uso de Animais (CEUA) e o Centro de Modelos Biológicos Experimentais (CEMBE-IDEIA) na capacitação de alunos</li>
+            </ul>
+            
+            <h4>1.4.2 Composição da CAPLAB</h4>
+            
+            <p>A CAPLab será constituída por um colegiado com número não inferior a seis membros, podendo contar com consultores ad hoc.</p>
+            
+            <p>As seis vagas serão preenchidas nos seguintes termos:</p>
+            
+            <ul>
+            <li>Um membro representante do Comitê de Ética em Pesquisa (CEP)</li>
+            <li>Um membro representante da CEUA</li>
+            <li>Um membro representante da Comissão Interna de Biossegurança institucional (CIBioPUCRS)</li>
+            <li>Um membro representante do SESMT</li>
+            <li>Um membro representante da PROGRAD</li>
+            <li>Um membro representante da Procuradoria Jurídica (PROJUR)</li>
+            </ul>
+            
+            <p>Os membros da CAPLab terão mandatos de dois anos, podendo ser renovados por períodos iguais ou sucessivos. A CAPLab é constituída administrativamente pelo Coordenador e Secretário Administrativo, sendo o Coordenador escolhido pelo Pró-Reitor de Pesquisa e Pós-Graduação dentre os membros da CAPLab.</p>
+            
+            <p>---</p>
+            
+            <h3>1.5 Comissões Científicas</h3>
+            
+            <p>As Comissões Científicas são ligadas diretamente aos Decanatos/Direções dos Institutos Tipo II da PUCRS, responsáveis pela avaliação de projetos de pesquisa a serem conduzidos no âmbito das unidades. Todos os projetos de pesquisa da Universidade devem ser previamente avaliados pelas referidas Comissões, sendo facultativa a avaliação das pesquisas que tenham como finalidade exclusiva revisões de literatura.</p>
+            
+            <h4>1.5.1 Atribuições</h4>
+            
+            <ul>
+            <li>Avaliar os projetos de pesquisa quanto à expectativa de geração de conhecimento, exequibilidade e relevância</li>
+            <li>Emitir parecer avaliativo no SIPESQ e comunicar a necessidade de encaminhamento do projeto a outras instâncias</li>
+            <li>Emitir parecer avaliativo referente a estágios pós-doutorais e estruturas de pesquisa</li>
+            <li>Manter os registros relativos aos pareceres emitidos</li>
+            <li>Divulgar orientações sobre a preparação do projeto e seus critérios de avaliação</li>
+            <li>Participar da Comissão Organizadora do Salão de Iniciação Científica</li>
+            </ul>
+            
+            <h4>1.5.2 Composição</h4>
+            
+            <p>As Comissões Científicas, no caso dos Institutos de Pesquisa, serão constituídas por, no mínimo, 3 membros e, no máximo, 5 membros. No caso das Escolas, a composição será de, no mínimo, 3 e, no máximo, 11 membros.</p>
+            
+            <p>Os membros devem ser docentes com regime especial de trabalho, credenciados como permanentes ou colaboradores nos Programas de Pós-Graduação da Universidade.</p>
+            
+            <p>As Comissões Científicas terão um Coordenador, um Coordenador Adjunto e membros indicados pelo gestor da respectiva Unidade Universitária, sendo nomeados por meio de portaria emitida pela PROPESQ.</p>
+            
+            <p>As indicações dos membros deverão ser encaminhadas para a PROPESQ até o dia 10 de janeiro de cada ano. Após as indicações, os membros deverão encaminhar para a PROPESQ a cópia física do Termo de Confidencialidade, devidamente preenchido e assinado.</p>
+            
+            <h4>1.5.3 Mandato</h4>
+            
+            <p>O mandato das Comissões Científicas será de um ano, iniciando sempre em março, com possibilidade de recondução, recomendando-se um mínimo de renovação de 1/3 de seus membros a cada novo mandato.</p>
+            
+            <h4>1.5.4 Procedimentos</h4>
+            
+            <p>A secretaria da PROPESQ recebe a documentação e encaminha à Diretoria de Pesquisa, que providenciará as emissões das portarias e acessos ao SIPESQ.</p>
+            
+            <h4>1.5.5 Disposições Gerais</h4>
+            
+            <p>As comissões científicas não devem avaliar projetos que tenham sido enviados por outros meios que não envolvam o SIPESQ. São vetadas análises de projetos enviados por docentes/pesquisadores que não tenham horas de pesquisa em suas planilhas, exceto aqueles de docentes contemplados na Chamada para o Programa de Apoio à Atuação de Professores Horistas em Atividades de Pesquisa na PUCRS.</p>
+            
+            <p>---</p>
+            
+            <h3>1.6 Coordenação de Pesquisa</h3>
+            
+            <p>A atuação do(a) Coordenador(a) de Pesquisa está pautada na interlocução entre as Escolas e a Pró-Reitoria de Pesquisa e Pós-Graduação, nos assuntos relacionados com pesquisa acadêmica, desenvolvimento, inovação e divulgação científica.</p>
+            
+            <p>O(A) Coordenador(a) de Pesquisa é indicado(a) pelo(a) Decano(a) da Escola, com chancela da Pró-Reitoria de Pesquisa e Pós-Graduação (PROPESQ).</p>
+            
+            <p>Podem ser atribuídas até 04 (quatro) horas em planilha para as atividades pertinentes à função, mediante solicitação e anuência do Decanato, em alinhamento com o número e dimensão das estruturas de pesquisa ligadas à Escola.</p>
+            
+            <p>---</p>
+            
+            <h4>Atribuições do Coordenador(a) de Pesquisa para Todas as Escolas</h4>
+            
+            <ul>
+            <li>Participar de reuniões junto ao Colegiado da Escola de vínculo e com a Diretoria de Pesquisa da PROPESQ, atuando como mediador de assuntos relacionados com as políticas de pesquisa</li>
+            <li>Conduzir os processos de avaliação quadrienal dos Laboratórios e Núcleos, em conjunto com a DIP-PROPESQ</li>
+            <li>Em alinhamento com a Escola de vínculo e com a Diretoria de Pesquisa da PROPESQ, acompanhar as atividades conduzidas pelos centros de pesquisa</li>
+            <li>Buscar interações entre as estruturas de pesquisa da Escola de vínculo com os Institutos de Pesquisa ligados à PROPESQ</li>
+            <li>Auxiliar na captação de material para divulgação científica e identificação de destaques nas atividades de pesquisa</li>
+            <li>Participar de iniciativas que promovam a maior interação entre a graduação e a pós-graduação por meio de atividades de pesquisa</li>
+            <li>Participar da elaboração e da condução de estratégias que visem a otimização do uso de recursos e da infraestrutura de pesquisa</li>
+            </ul>
+            
+            <h4>Atribuições Específicas para Escolas com Laboratórios/Centros Técnico-Científicos</h4>
+            
+            <ul>
+            <li>Interagir com a Coordenadoria Institucional de Apoio ao Pesquisador para identificar oportunidades de melhoria e aquisição de equipamentos</li>
+            <li>Interagir com a Diretoria de Pesquisa da PROPESQ na gestão de laboratórios e centros de pesquisa vinculados às Escolas</li>
+            <li>Interagir com a Assessoria de Boas Práticas de Pesquisa da PROPESQ, auxiliando no manejo de questões relacionadas com documentos utilizados em pesquisas, doações, patrimônio genético, aquisição e manutenção de substâncias controladas</li>
+            <li>Interagir com o Centro de Apoio ao Desenvolvimento Científico e Tecnológico (IDEIA) no recebimento de solicitações e no acompanhamento do compartilhamento de equipamentos científicos</li>
+            </ul>
+            
+            <p>---</p>
+            
+            <h3>1.7 Sistema de Pesquisa da PUCRS (SIPESQ)</h3>
+            
+            <p>O Sistema de Pesquisa da PUCRS (SIPESQ) tem por objetivo fazer o mapeamento de estruturas de pesquisa e projetos de pesquisa desenvolvidos na Universidade, a fim de definir e implantar um conjunto de políticas institucionais e ações visando à valorização dos pesquisadores e das Estruturas de Pesquisa que contribuem para a qualificação do ensino e da pesquisa.</p>
+            
+            <h4>Cadastro de Estruturas de Pesquisa</h4>
+            
+            <p>Todas as estruturas de pesquisa (Centros, Núcleos, Laboratórios e Grupos) deverão ser cadastradas no SIPESQ após todas as aprovações necessárias. Somente as estruturas registradas no SIPESQ são consideradas estruturas de pesquisa oficiais vinculadas à Universidade.</p>
+            
+            <h4>Cadastro de Projetos de Pesquisa</h4>
+            
+            <p>Todos os projetos de pesquisa desenvolvidos na Universidade deverão ser cadastrados pelo pesquisador no SIPESQ, mediante preenchimento dos dados e anexo dos arquivos do projeto e do orçamento, quando for o caso, bem como toda a documentação solicitada pela Comissão Científica da Unidade, e/ou pelo Comitê de Ética em Pesquisa (CEP) e/ou pela Comissão de Ética para o Uso de Animais (CEUA) quando apropriado.</p>
+            
+            <p>Somente os projetos registrados no SIPESQ são considerados projetos oficiais vinculados à Universidade.</p>
+            
+            <h4>Análise e Aprovação de Projetos</h4>
+            
+            <p>A análise dos projetos de pesquisa no SIPESQ é uma atividade de fluxo contínuo realizada pela Comissão Científica, à qual o projeto estará vinculado.</p>
+            
+            <p>A execução do projeto inicia somente quando for aprovado pela Comissão Científica. No caso de necessitar, também, de aprovação do CEP e/ou CEUA, o mesmo só poderá ser iniciado quando ocorrer a aprovação nesta(s) instância(s). Os documentos submetidos à avaliação do CEP e/ou CEUA devem ser os mesmos, e na mesma versão que os aprovados pela Comissão Científica da Unidade.</p>
+            
+            <h4>Acompanhamento do Pesquisador</h4>
+            
+            <p>No SIPESQ, na aba "Minha Atuação", o pesquisador pode visualizar seus cadastros como coordenador de Projetos e de Estruturas de Pesquisa e como participante em outros Projetos e/ou em outras Estruturas de Pesquisa.</p>
+            
+            <p>---</p>
+            
+            <h3>1.8 Coordenadoria Institucional de Apoio ao Pesquisador (CIAP)</h3>
+            
+            <p>A Coordenadoria Institucional de Apoio ao Pesquisador (CIAP) está ligada à Diretoria de Pesquisa da PROPESQ e atua em alinhamento com as Escolas, por meio da interação com as Comissões Científicas e com as Coordenações de Pesquisa.</p>
+            
+            <p>A CIAP tem um papel central e integrador, sendo responsável por facilitar, orientar e dar suporte aos pesquisadores em todas as fases de seus projetos de pesquisa, bem como aos projetos de pesquisa institucionais. Ela atua como um elo entre os pesquisadores e a administração, assegurando que os projetos avancem de maneira eficiente, organizada e alinhada aos objetivos institucionais, promovendo impacto científico e social.</p>
+            
+            <p>A CIAP é um facilitador nos processos e nos direcionamentos de demandas relacionadas aos projetos de pesquisa científica na PUCRS. É responsável por apoiar a prospecção de oportunidades de fomento (nacional e internacional) e auxiliar na submissão, no acompanhamento e na prestação de contas dos projetos de pesquisa com captação externa de recursos financeiros em nome do pesquisador.</p>
+            
+            <p>No que se refere aos projetos de pesquisa científica com captação de recursos institucionais, atua em colaboração com o Escritório de Projetos e com o Núcleo de Inovação Tecnológica, apoiando as questões técnico-científicas, desde a submissão da proposta até o encerramento do projeto.</p>
+            
+            <h4>1.8.1 Prospecção de Oportunidades de Fomento</h4>
+            
+            <p>Para apoiar a busca por recursos financeiros de agências de fomento, empresas, órgãos governamentais, entre outros, a PROPESQ disponibiliza o **Pesquisa em Pauta** (portal.pucrs.br/sou-pesquisador/pesquisa-em-pauta/), uma página na web onde são divulgados editais e oportunidades para os pesquisadores.</p>
+            
+            <p>Eventualmente, são realizados contatos diretos com os Pesquisadores, Coordenadores de Pesquisa das Escolas e Diretores de Institutos, quando são identificadas oportunidades de áreas específicas.</p>
+            
+            <p>Caso o pesquisador encontre uma oportunidade de fomento além das divulgadas, o contato com a CIAP é importante para avaliação dos requisitos necessários para a submissão da proposta. Esta etapa garante que o projeto submetido atenda aos requisitos institucionais, viabilizando a sua contratação e execução na PUCRS, caso venha a ser contemplado.</p>
+            
+            <p>---</p>
+            
+            <h4>1.8.2 Submissão de Projetos para Agências de Fomento</h4>
+            
+            <p>Alguns editais solicitam, como documento obrigatório, o envio de carta de anuência da Instituição, concordando com a submissão da proposta. Este documento é emitido pela PROPESQ e assinado pelo Pró-Reitor de Pesquisa e Pós-Graduação como representante legal da PUCRS.</p>
+            
+            <p>Nesse caso, as solicitações devem ser direcionadas ao e-mail da CIAP (apoio.pesquisador@pucrs.br), com antecedência ao prazo final de submissão, a fim de garantir a assinatura em tempo hábil.</p>
+            
+            <h5>Solicitação de Anuência Institucional para Projeto de Pesquisa</h5>
+            
+            <p>Quando for necessária a anuência institucional (carta de ciência, anuência, interesse institucional, carta convite ou documento equivalente) para fins de submissão de projeto de pesquisa científica a órgãos de fomento, a assinatura do documento deve ser solicitada ao CIAP através do e-mail **apoio.pesquisador@pucrs.br**, contendo as seguintes informações:</p>
+            
+            <ul>
+            <li>Referência do edital ou link para o website da chamada</li>
+            <li>Título do projeto</li>
+            <li>Nome do proponente (nos casos em que o pesquisador da PUCRS é colaborador em proposta a ser submetida por outra instituição, informar o nome do proponente do projeto, a instituição proponente e o nome do pesquisador responsável pelo projeto na PUCRS)</li>
+            <li>Resumo da proposta (ou o arquivo do projeto)</li>
+            <li>Itens que serão solicitados no orçamento</li>
+            <li>Indicar a necessidade de contrapartida por parte da PUCRS, especificando caso positivo, e informar se existe aprovação prévia desta contrapartida</li>
+            </ul>
+            
+            <p>---</p>
+            
+            <h5>Informações Adicionais</h5>
+            
+            <p>Havendo um padrão de carta solicitado pelo edital, o pesquisador deverá encaminhar o documento modelo com as informações do projeto previamente preenchidas.</p>
+            
+            <p>Informações adicionais podem ser solicitadas dependendo de cada caso. Além disso, podem ser necessárias outras articulações/aprovações institucionais previamente à assinatura, o que pode demandar tempo. Desta forma, reforça-se a necessidade de encaminhar a solicitação de assinatura com antecedência para atendimento do prazo de submissão do edital.</p>
+            
+            <p>Alguns projetos demandam a contratação institucional, no CNPJ da PUCRS. Isso ocorre para algumas agências de fomento, como a FINEP, em convênios com empresas, governos e outras instituições, além de algumas oportunidades internacionais. Nessas situações, é imprescindível contatar o **Escritório de Projetos** (gestaodeprojetos@pucrs.br) e o **Núcleo de Inovação Tecnológica** (negociacaodeprojetos@pucrs.br) para alinhamentos e orientações de como proceder.</p>
+            
+            <p>Os projetos contemplados com recursos financeiros são contabilizados e registrados pela PROPESQ, a fim de consolidar os indicadores semestrais e anuais. Desta forma, é importante comunicar a CIAP, sempre que houver aprovação de propostas.</p>
+            
+            <p>Para a submissão de propostas, pode ser necessário o cadastro da PUCRS em algum sistema específico e/ou do vínculo do pesquisador. Caso seja identificada esta necessidade, as solicitações devem ser feitas com antecedência ao CIAP.</p>
+            
+            <p>A CIAP também está à disposição para apoiar e esclarecer dúvidas dos professores e pesquisadores quanto ao preenchimento de plataformas diversas, tanto para a submissão de propostas (Carlos Chagas, SIGFAPERGS, SICAPES, entre outras) quanto para o registro de seus resultados (Lattes, Web of Science, ORCID, ResearcherID e outras).</p>
+            
+            <h4>1.8.3 Execução de Projetos Financiados por Agências de Fomento</h4>
+            
+            <p>O apoio à execução e à finalização dos projetos de pesquisa científica financiados por agências de fomento pode ser solicitado à CIAP, que auxiliará na busca de respostas e nos direcionamentos institucionais necessários, tais como:</p>
+            
+            <ul>
+            <li>Necessidade de assinatura de termo de outorga, termo de aceite e demais documentos pelos dirigentes institucionais</li>
+            <li>Apoio na solicitação de troca de rubricas, alterações de prazos, patrimônio de equipamentos, transferências de equipamentos entre instituições, envio e importação de materiais, entre outros</li>
+            <li>Orientação quanto a elaboração de relatórios e prestação de contas</li>
+            <li>Apoio à solução de possíveis diligências, com identificação das pendências e auxílio na elaboração da resposta</li>
+            </ul>
+            
+            <p>---</p>
+            
+            <h3>1.9 Escritório de Integridade em Pesquisa</h3>
+            
+            <p>O Escritório de Integridade em Pesquisa, vinculado à PROPESQ, é responsável por articular e mediar as questões éticas implicadas nas atividades de pesquisa e na produção e difusão do conhecimento científico.</p>
+            
+            <p>Suas atividades são conduzidas com base em documentos balizadores nacionais e internacionais que discutem ética em pesquisa, em alinhamento com o **Guia de Boas Práticas em Pesquisa Científica da PUCRS**.</p>
+            
+            <p>Referência: https://www.pucrs.br/wp-content/uploads/2022/03/2022_03_21-propesq-pesquisa-guia_de_boas_praticas_em_pesquisa.pdf</p>
+            
+            <p>---</p>
+            
+            <h3>1.10 Comitê de Ética em Pesquisa (CEP)</h3>
+            
+            <p>O Comitê de Ética em Pesquisa da PUCRS (CEP) tem como finalidade avaliar protocolos de pesquisas envolvendo seres humanos sob o ponto de vista ético, com prioridade nos temas de relevância pública e de interesse estratégico, emitindo parecer devidamente justificado.</p>
+            
+            <p>A avaliação ética fundamenta-se no respeito ao participante da pesquisa em sua dignidade e autonomia, reconhecendo sua vulnerabilidade, assegurando sua vontade de contribuir e de permanecer, ou não, na pesquisa, por intermédio de manifestação expressa, livre e esclarecida.</p>
+            
+            <h4>1.10.1 Submissão de Projetos Acadêmicos pela Plataforma Brasil</h4>
+            
+            <p>Podem submeter projetos ao Comitê de Ética em Pesquisa (CEP), pela Plataforma Brasil, os docentes vinculados à PUCRS, em regime especial (T20, T30, T40, TI, DE), e profissionais de saúde que façam parte do corpo clínico do Hospital São Lucas da PUCRS (HSL). Os casos que envolvem a participação de docentes em regime de trabalho horista, sem remuneração de horas de pesquisa e de bolsistas de pós-Doutorado, devem ser previamente aprovados pela PROPESQ.</p>
+            
+            <h4>1.10.2 Submissão de Ensaios Clínicos pela Plataforma Brasil</h4>
+            
+            <p>Todos os profissionais da saúde credenciados junto ao Corpo Clínico do Hospital e/ou membros do Serviço Assistencial do Hospital São Lucas da PUCRS podem submeter ensaios clínicos ao Comitê de Ética em Pesquisa (CEP), pela Plataforma Brasil, desde que os submetam para avaliação prévia do CPC, quanto à adequação de orçamento e desenho do estudo. Ensaios clínicos com intervenção, que não tenham financiamento, não poderão ser submetidos.</p>
+            
+            <p>**Horas em planilha:** Todos os membros do Comitê terão duas horas semanais, alocadas em planilha, para o desenvolvimento de atividades relacionadas ao Comitê. Para o coordenador, serão alocadas quatro horas semanais.</p>
+            
+            <p>---</p>
+            
+            <h3>1.11 Comissão de Ética no Uso de Animais (CEUA)</h3>
+            
+            <p>A Comissão de Ética no Uso de Animais (CEUA) é órgão de caráter normativo, consultivo, deliberativo, fiscalizador e educativo vinculado à Pró-Reitoria de Pesquisa e Pós-Graduação (PROPESQ). Tem como função primordial cumprir e fazer cumprir as normas e condutas na utilização e na criação de animais para atividades de pesquisa científica, ensino e extensão, no âmbito da Universidade, em acordo com a Lei nº 11.794 (Lei Arouca), de outubro de 2008, Decreto nº 6.899, de 15 de julho de 2009, e demais normas do Conselho Nacional de Controle de Experimentação Animal (CONCEA).</p>
+            
+            <h4>1.11.1 Submissão de Protocolos de Pesquisa</h4>
+            
+            <p>Podem submeter projetos à Comissão de Ética no Uso de Animais (CEUA) os docentes vinculados à PUCRS, em regime especial (T20, T30, T40, TI, DE) e horistas com projetos aprovados e horas de pesquisa concedidas, através do edital específico.</p>
+            
+            <h4>1.11.2 Submissão de Protocolos de Aulas Práticas</h4>
+            
+            <p>Os professores, através da ciência do Gestor da Unidade de origem, podem solicitar autorização para o uso de animais em ensino, em casos excepcionais. Esta solicitação deve ser feita pelo Gestor da Unidade, com no mínimo 30 (trinta) dias antes do início das aulas.</p>
+            
+            <p>**Horas em planilha:** Todos os professores nomeados membros da comissão terão 2 horas semanais, alocadas em planilha, para o desenvolvimento de atividades relacionadas à comissão. Para o coordenador, serão alocadas 4 horas semanais.</p>
+            
+            <p>---</p>
+            
+            <h3>1.12 Outras Questões Regulatórias</h3>
+            
+            <p>Os projetos que envolvem o Acesso ao Patrimônio Genético (PG) e ao Conhecimento Tradicional Associado (CTA) ao Patrimônio Genético, nos termos da Lei nº 13.123, de 20 de maio de 2015, devem ser cadastrados no **Sistema Nacional de Gestão do Patrimônio Genético e do Conhecimento Tradicional Associado (SisGen)** – https://sisgen.gov.br/.</p>
+            
+            <p>O cadastro é realizado pelos pesquisadores e o acesso deve ser registrado previamente à divulgação dos resultados (independe do tipo de divulgação, não necessariamente científica), pedido de patente, proteção de cultivo, remessa para o exterior e comercialização de produto.</p>
+            
+            <p>No primeiro acesso ao SisGen, pode ser solicitada a instalação do módulo de segurança. Para instalação deste módulo, é necessário entrar em contato com a GTIT (ramal 4545).</p>
+            
+            <p>Dúvidas relacionadas com PG, CTA e cadastro no SisGen, podem ser esclarecidas através do e-mail **patrimonio.genetico@pucrs.br**.</p>
+            
+            <p>Além das instâncias mencionadas acima, podem ser necessárias outras aprovações a depender do objeto da pesquisa, como por exemplo, aprovação do IBAMA, Marinha do Brasil e Anvisa, entre outros. Eventualmente, a avaliação do Serviço Especializado em Segurança e Medicina do Trabalho (SESMT) pode ser necessária, como nos casos de uso de reagentes controlados, produtos químicos inflamáveis e quaisquer outros insumos que possam causar riscos ocupacionais aos colaboradores e alunos.</p>
+            
+            <p>---</p>
+            
+            <h3>1.13 Programa de Bolsas de Iniciação Científica</h3>
+            
+            <p>Com a mesma perspectiva da Iniciação Científica, os programas de bolsas buscam fomentar o interesse pela pesquisa e ampliar o número e a qualidade dos estudos científicos no País.</p>
+            
+            <p>Informações sobre os Programas de Bolsas de Iniciação Científica da PUCRS, FAPERGS, CNPQ e Voluntário estão disponíveis na página da Iniciação Científica.</p>
+            
+            <h4>Submissão dos Projetos</h4>
+            
+            <p>A submissão de projetos é realizada online pelo professor/pesquisador responsável pela pesquisa via Sistema de Avaliação de Projetos (SAP), no link https://webapp.pucrs.br/sibic/.</p>
+            
+            <h4>1.13.1 Programa Institucional de Bolsas PUCRS</h4>
+            
+            <p>O Programa Institucional de Bolsa de Iniciação Científica e de Iniciação em Desenvolvimento Tecnológico e Inovação da PUCRS tem como objetivo estimular os estudantes de graduação nas atividades, metodologias, conhecimentos e práticas próprias ao desenvolvimento científico, tecnológico e de processos de inovação.</p>
+            
+            <p>**Duração:** 12 (doze) meses com início em setembro e término em agosto do ano subsequente.</p>
+            
+            <h4>1.13.2 Programa Institucional de Bolsas FAPERGS</h4>
+            
+            <p>O Programa Institucional de Bolsas de Iniciação Científica e de Iniciação Tecnológica e de Inovação da FAPERGS (Fundação de Amparo à Pesquisa do Estado do Rio Grande do Sul) é destinado a estudantes de graduação de todas as áreas do conhecimento.</p>
+            
+            <p>**Duração:** 12 (doze) meses com início em setembro e término em agosto do ano subsequente.</p>
+            
+            <h4>1.13.3 Programa Institucional de Bolsas CNPq</h4>
+            
+            <p>O Programa Institucional de Bolsa de Iniciação Científica e de Iniciação em Desenvolvimento Tecnológico e Inovação do CNPq (Conselho Nacional de Desenvolvimento Científico e Tecnológico) visa apoiar a política de Iniciação Científica desenvolvida nas Instituições de Ensino e/ou Pesquisa.</p>
+            
+            <p>**Duração:** 12 (doze) meses com início em setembro e término em agosto do ano subsequente.</p>
+            
+            <h4>1.13.4 Programa Institucional de Iniciação Científica Voluntário (PICV)</h4>
+            
+            <p>O Programa de Iniciação Científica Voluntário da PUCRS – PICV tem como objetivo proporcionar a formação humana e científica complementar aos alunos de graduação da PUCRS, mediante a realização voluntária de atividades de pesquisa sob a coordenação de um professor/pesquisador vinculado à Universidade.</p>
+            
+            <p>**Duração:** 12 (doze) meses, contados a partir da assinatura do Termo de Outorga PICV, podendo ser prorrogada por igual período, enquanto o aluno permanecer matriculado em curso de graduação da PUCRS.</p>
+            
+            <p>**Carga horária:** O estudante poderá participar de mais de uma Estrutura ou Projeto de Pesquisa, desde que a soma das cargas horárias não ultrapasse 20 horas semanais. Se o aluno também for bolsista de iniciação científica ou tecnológica, a soma da carga horária da bolsa com o PICV não poderá ultrapassar 30 horas semanais.</p>
+            
+            <h4>1.13.5 Bolsas Pesquisador – Acolhimento de Bolsistas de Graduação</h4>
+            
+            <p>Os Bolsistas de Graduação – Bolsas Pesquisador, nas modalidades de iniciação científica ou tecnológica são alunos vinculados a projetos de pesquisa sob a responsabilidade de um pesquisador com vínculo empregatício ativo, com horas de pesquisa em planilha, na PUCRS. Essas bolsas são obtidas diretamente pelo pesquisador junto a agências de fomento e destinam-se a estudantes internos e externos à PUCRS.</p>
+            
+            <h4>1.13.6 Programa de Educação Tutorial – PET</h4>
+            
+            <p>O Programa de Educação Tutorial – PET da Secretaria de Educação Superior (SESu) do Ministério da Educação (MEC) é institucionalmente vinculado à Pró-Reitoria de Graduação e Educação Continuada – PROGRAD e conta com o apoio da Coordenadoria de Iniciação Científica nas atividades administrativas.</p>
+            
+            <p>Há cinco grupos PET na PUCRS, os quais possuem entre quatro e doze alunos coordenados por professores tutores.</p>
+            
+            <p>**Duração:** O grupo PET, uma vez criado, mantém suas atividades por tempo indeterminado. O incentivo pode ser concedido ao estudante bolsista até a conclusão da sua graduação. O professor tutor pode permanecer na função por três anos e ser reconduzido por, no máximo, igual período.</p>
+            
+            <p>---</p>
+            
+            <h3>1.14 Acolhida a Pesquisadores</h3>
+            
+            <h4>1.14.1 Acolhida a Estágios Pós-Doutorais</h4>
+            
+            <p>Classifica-se em Estágio Pós-Doutoral, o candidato com doutorado concluído, com ou sem vínculo empregatício. A acolhida a estágios pós-doutorais, com ou sem bolsa de estudos possibilita a presença de pesquisadores qualificados nos Grupos de Pesquisa e nos Programas de Pós-Graduação Stricto Sensu.</p>
+            
+            <p>Os Grupos de Pesquisa consolidados da PUCRS e os Programas de Pós-Graduação Stricto Sensu poderão receber, nesta modalidade, doutores titulados no país ou no exterior. Esses candidatos deverão contar com um professor supervisor responsável e estar engajado nas atividades dos projetos de pesquisa em desenvolvimento ou no Grupo de Pesquisa da PUCRS.</p>
+            
+            <h4>1.14.2 Acolhida a Professor/Pesquisador Visitante</h4>
+            
+            <p>A acolhida a Professor/Pesquisador Visitante pressupõe que este realizará atividades de ensino, e/ou pesquisa e/ou coorientação de estudantes regularmente matriculados na pós-graduação Stricto Sensu, em período igual ou superior a 30 dias.</p>
+            
+            <p>Classifica-se como Professor/Pesquisador Visitante, o candidato com doutorado concluído (ou título equivalente) que possua vínculo empregatício formal em uma instituição de ensino e/ou pesquisa nacional ou estrangeira e que apresente destacada produção intelectual.</p>
+            
+            <h4>1.14.3 Acolhida a Bolsista DTI/PDTI</h4>
+            
+            <p>DTI/PDTI são modalidades de bolsas destinadas a graduandos, graduados, mestres ou doutores, para a atuação em equipes de execução de projetos de pesquisa voltados para o desenvolvimento tecnológico e industrial, concedidas por órgãos ou agências de fomento, tais como CNPQ e FAPERGS, respectivamente.</p>
+            
+            <p>Os bolsistas devem ser vinculados a um Grupo de Pesquisa consolidado da PUCRS sob a supervisão de um professor com vínculo empregatício ativo na PUCRS.</p>
+            
+            <p>---</p>
+            
+            <h3>2.1 Programas Stricto Sensu</h3>
+            
+            <p>Conforme o Estatuto e Regimento Geral da Universidade, os Programas de Pós-Graduação (PPGs) têm por objetivo principal a formação de pessoal altamente qualificado e comprometido com o avanço do conhecimento para o exercício das atividades de ensino, pesquisa e de desenvolvimento nos diversos campos.</p>
+            
+            <p>Os PPGs Stricto Sensu da PUCRS compreendem os níveis de Mestrado e de Doutorado Acadêmicos, sendo orientados pelo Estatuto e Regimento Geral da Universidade. Além disso, cada PPG possui Regulamento próprio, aprovado pelo Colegiado Acadêmico da Escola a que está vinculado, pela Diretoria de Pós-Graduação (DPG) da PROPESQ e pela Câmara de Pesquisa e Pós-Graduação (CPPG).</p>
+            
+            <h4>2.1.1 Projeto de Curso Novo Stricto Sensu</h4>
+            
+            <p>A proposta de curso novo Stricto Sensu deve ser apresentada pela Escola levando-se em consideração normas, exigências e calendário estabelecidos pela CAPES. A proposta deve estar em consonância com as normas e exigências estabelecidas no âmbito de cada uma das Áreas da CAPES.</p>
+            
+            <p>É imprescindível que propostas de curso novo sejam previamente discutidas com a PROPESQ. A proposta do curso deverá levar em consideração aspectos relacionados à viabilidade do curso tanto no âmbito regional quanto com relação à viabilidade econômico-financeira do mesmo, a aderência ao Programa Nacional de Pós-Graduação da CAPES e a relevância do curso proposto.</p>
+            
+            <p><strong>Observações:</strong></p>
+            <ul>
+            <li>A proposta do curso deverá ser encaminhada para a DPG com no mínimo 90 (noventa) dias de antecedência da data inicial prevista para o envio à CAPES</li>
+            <li>Se for necessária diligência, o processo retornará ao Decanato da Escola para as providências cabíveis</li>
+            </ul>
+            
+            <h4>2.1.2 Projetos de Cooperação entre Instituições para Qualificação de Profissionais de Nível Superior (PCI)</h4>
+            
+            <p>Conforme definido na Portaria Capes nº 120, de 26 de junho de 2023, o Projeto de Cooperação entre Instituições para Qualificação de Profissionais de Nível Superior (PCI), MINTER e DINTER, são projetos que contemplam turmas de mestrado e de doutorado conduzidas por uma instituição promotora (nacional) com programa de pós-graduação stricto sensu (PPG) reconhecido pela Câmara de Educação Superior do Conselho Nacional de Educação (CES/CNE).</p>
+            
+            <p>A instituição promotora responde pela promoção, gestão, coordenação acadêmica, titulação dos discentes e garantia do padrão de qualidade dos PCI. Por sua vez, a instituição receptora responde pela garantia da infraestrutura de ensino e pesquisa, do apoio administrativo às atividades do projeto e do acompanhamento e atendimento geral aos discentes.</p>
+            
+            <p>Cada programa promotor poderá ser responsável pela condução de apenas uma turma Mestrado e/ou uma turma Doutorado concomitantemente. Excepcionalmente, PPGs avaliados com nota 6 ou 7 poderão cadastrar uma turma excedente em cada nível concomitantemente.</p>
+            
+            <h4>2.1.3 Estrutura do PPG</h4>
+            
+            <p>O PPG é estruturado em área(s) de concentração que, por sua vez, desdobram-se em linhas de pesquisa, fomentadas e associadas diretamente às atividades de pesquisa e projetos realizados pelos docentes credenciados no PPG.</p>
+            
+            <p>O número de áreas de concentração e linhas de pesquisa deve ser compatível com o número de docentes credenciados. Além disso, a estrutura curricular e consequentemente as disciplinas oferecidas também devem estar em consonância com a(s) área(s) de concentração e com a(s) linha(s) de pesquisa no PPG.</p>
+            
+            <h4>2.1.3.1 Atualização da Estrutura do PPG</h4>
+            
+            <p>Eventualmente, o PPG pode realizar uma atualização de sua estrutura. O PPG pode, motivado pelo parecer de avaliação emitido pela CAPES, por uma demanda de formação de recursos humanos específica ou mesmo por alterações significativas no corpo docente, atualizar suas áreas de concentração, linhas de pesquisa e/ou elenco de disciplinas.</p>
+            
+            <h4>2.1.3.2 Estrutura Curricular do PPG</h4>
+            
+            <p>De acordo com o Art. 111 do Estatuto e Regimento Geral da PUCRS, cada Programa de Pós-Graduação define as disciplinas obrigatórias e eletivas do curso. As disciplinas obrigatórias são oferecidas para os alunos matriculados no respectivo curso de Mestrado/Doutorado. As disciplinas eletivas podem ser ofertadas para outros cursos da Pós-Graduação da PUCRS.</p>
+            
+            <p>As disciplinas oferecidas pelos PPGs compõem a sua estrutura curricular. Eventualmente, o PPG pode atualizar seu elenco de disciplinas através da criação, alteração, ativação ou inativação das mesmas. Em todas as situações, a disciplina terá NOME e EMENTA em português, inglês e espanhol.</p>
+            
+            <p>**Importante:** Para solicitar a criação, alteração ou ativação de disciplina que será ofertada no primeiro período letivo do ano, o PPG deve encaminhar a solicitação até o dia 31 de janeiro. Para o segundo período letivo do ano, o PPG deve encaminhar a solicitação até o dia 30 de junho.</p>
+            
+            <p>As solicitações de disciplinas após esse período, deverão ser acompanhadas de:</p>
+            <ul>
+            <li>Cópia da ata aprovada pela Comissão Coordenadora</li>
+            <li>Ofício constando a justificativa para solicitação de disciplina fora de prazo</li>
+            </ul>
+            
+            <p><strong>Observações:</strong></p>
+            <ul>
+            <li>A alteração de mais de 40% das disciplinas do PPG caracteriza-se como uma alteração na estrutura curricular do mesmo e, portanto, deve ser aprovada em CPPG</li>
+            <li>O Programa deve ter o cuidado de manter como disciplinas ATIVAS, somente aquelas que fazem parte da Estrutura Curricular do PPG</li>
+            <li>Caso a alteração da disciplina envolva mudança no NOME, o procedimento deve ser de INATIVAÇÃO seguido de CRIAÇÃO de disciplina</li>
+            <li>As disciplinas transversais, amplas para todos os PPGs, devem ser alinhadas previamente com a DPG</li>
+            <li>Atenção para o alinhamento das informações sobre disciplinas no Controle de Professores (CP)</li>
+            </ul>
+            
+            <p>---</p>
+            
+            <h4>2.1.3.3 Regulamento do PPG</h4>
+            
+            <p>Conforme Estatuto e Regimento Geral da Universidade, Art. 98, os programas de pós-graduação Stricto Sensu compreendem atividades de ensino e pesquisa definidas no regulamento específico de cada programa. O Regulamento do PPG pode eventualmente ser alterado visando uma atualização ou modificação das normas que regem o Programa.</p>
+            
+            <h4>2.1.4 Coordenação do PPG</h4>
+            
+            <p>De acordo com o Art. 93, §1º do Estatuto e Regimento Geral da Universidade, cada PPG tem um Coordenador indicado pelo Decano da Escola, após consulta ao Colegiado Acadêmico, aprovação pelo Pró-Reitor de Pesquisa e Pós-Graduação e nomeação pelo Reitor. O Coordenador é um docente da PUCRS credenciado como permanente no Programa que possui as seguintes atribuições:</p>
+            
+            <ul>
+            <li>Coordenar e orientar todas as atividades do Programa de Pós-Graduação sob sua responsabilidade</li>
+            <li>Convocar e presidir as reuniões da Comissão Coordenadora</li>
+            <li>Integrar o Colegiado Acadêmico da Escola</li>
+            <li>Representar o Programa, obedecidas as regras estatutárias e regimentais</li>
+            <li>Apresentar, anualmente, ao Colegiado Acadêmico da Escola relatórios sobre atividades e projetos</li>
+            <li>Elaborar edital de seleção de alunos a ser encaminhado à Comissão Coordenadora</li>
+            <li>Nomear os membros das comissões examinadoras de dissertações e teses, previamente aprovados pela Comissão Coordenadora e com a ciência do Decano da Escola</li>
+            <li>Formalizar o convite aos membros das comissões examinadoras</li>
+            </ul>
+            
+            <p><strong>Observações:</strong></p>
+            <ul>
+            <li>A definição de coordenador(a) dos Programas de Pós-Graduação para o próximo ano deve ser enviado à DPG até o dia 25 de novembro</li>
+            <li>No caso de troca de coordenação, importante atenção para: (a) responsabilidade pela inserção do Relatório Anual (COLETA) do PPG na Plataforma Sucupira e (b) gestão do PROEX, para os Programas notas 6 e 7</li>
+            </ul>
+            
+            <h4>2.1.5 Comissão Coordenadora</h4>
+            
+            <p>Conforme Art. 103 do Estatuto e Regimento Geral da Universidade, o Coordenador de Programa é assessorado por uma Comissão Coordenadora constituída por:</p>
+            
+            <p><strong>I – Docentes credenciados permanentes no PPG, com título de Doutor:</strong></p>
+            <ul>
+            <li>Um docente indicado pelo Coordenador antes da eleição</li>
+            <li>Representantes docentes, no mínimo 2 (dois), eleitos pelos professores credenciados, limitados pelo número de áreas de concentração ou linhas de pesquisa</li>
+            </ul>
+            
+            <p>**II – Um representante do corpo discente do PPG**</p>
+            
+            <p>As atribuições da Comissão Coordenadora estão descritas no Art. 104 do Estatuto e Regimento Geral da Universidade. É importante destacar que as reuniões da Comissão Coordenadora devem ocorrer com periodicidade mínima mensal durante o ano letivo.</p>
+            
+            <p>A composição da Comissão Coordenadora deverá ser indicada anualmente e a nominata deve ser encaminhada pela coordenação do PPG para a DPG da PROPESQ.</p>
+            
+            <p>**Importante:** Os documentos listados abaixo indicando os docentes e o representante discente deverão ser encaminhados à DPG até o dia 15 de dezembro. A nova Comissão Coordenadora será vigente a partir de 1º de março.</p>
+            
+            <p><strong>Observações:</strong></p>
+            <ul>
+            <li>O(a) coordenador(a) e o(a) representante discente não devem ser contabilizados no cálculo da renovação</li>
+            <li>Os docentes eleitos como membros da Comissão Coordenadora não poderão se fazer representar por outro docente</li>
+            <li>Toda a vez que um dos membros da Comissão Coordenadora se ausentar por no mínimo 6 (seis) meses, o mesmo deverá ser substituído através de nova eleição</li>
+            </ul>
+            
+            <h4>2.1.6 Plano de Credenciamento</h4>
+            
+            <p>O Plano de Credenciamento dos PPGs deve ter como referência os critérios estabelecidos pelas diversas áreas do conhecimento definidas na CAPES, os critérios de avaliação do CNPq para concessão de bolsas de Produtividade em Pesquisa (PQ) e bolsas de Desenvolvimento Científico e Tecnológico (DT), bem como eventuais critérios próprios e estratégicos do PPG.</p>
+            
+            <p>O desempenho do pesquisador deve ser considerado nas seguintes esferas:</p>
+            
+            <p>**Produção Científica:** A produção científica do professor deve ser avaliada com base nos parâmetros definidos pela área de conhecimento da CAPES na qual o PPG se enquadra, levando-se em consideração a periodicidade da avaliação CAPES.</p>
+            
+            <p>**Projetos de Pesquisa e Captação de Recursos:** O envolvimento, seja como coordenador ou integrante, do professor em projetos de pesquisa financiados por agências de fomento ou empresas, com efetiva participação de discentes de graduação e pós-graduação, deve ser avaliada. Além disso, prevê-se que o Plano de Credenciamento também leve em consideração a capacidade do professor de captar recursos financeiros.</p>
+            
+            <p>**Atividades de Formação:** O envolvimento do professor em atividades de formação de recursos humanos, seja na graduação como na pós-graduação deve ser avaliado. Em mais detalhes, aspectos relacionados à orientação de discentes da pós-graduação e da graduação em Iniciação Científica ou em Trabalho de Conclusão de Curso, bem como o envolvimento do professor em aulas na graduação e na pós-graduação devem ser levados em consideração.</p>
+            
+            <p>**Importante:** A Produção Científica é considerada essencial e portanto, deve ter o maior peso na avaliação do docente. Um desempenho muito bom no âmbito de Projetos de Pesquisa e Captação de Recursos, e de Atividades de Formação não compensa um desempenho deficiente na Produção Científica.</p>
+            
+            <p>A alteração do Plano de Credenciamento do PPG pode ser realizada toda a vez que o PPG julgar necessário um ajuste nos critérios de avaliação ou requisitos mínimos a serem alcançados, sendo fundamentalmente motivada por alguma alteração no Documento de Área da CAPES. Assim, o Plano de Credenciamento deve ser atualizado pelo menos uma vez a cada quadriênio.</p>
+            
+            <p>**Importante:** As alterações no documento Plano de Credenciamento devem ser encaminhadas para análise da DPG até o dia 15 de novembro. A proposta será apreciada na CPPG do mês de dezembro. O Plano de Credenciamento atualizado e aprovado poderá ser usado no credenciamento do próximo ano.</p>
+            
+            <p><strong>Observações:</strong></p>
+            <ul>
+            <li>Eventualmente, o Plano de Credenciamento será analisado por pareceristas os quais deverão apresentar parecer circunstanciado</li>
+            <li>Uma vez o Plano de Credenciamento aprovado, o PPG deve passar a aplicá-lo a partir da data de aprovação</li>
+            </ul>
+            
+            <h4>2.1.7 Indicadores dos Programas de Pós-Graduação</h4>
+            
+            <p>Os indicadores dos Programas de Pós-Graduação são coletados semestralmente, com o objetivo de avaliar o desempenho dos Programas de Pós-Graduação. Os indicadores incluem:</p>
+            
+            <ul>
+            <li>Docente Permanente (DP)</li>
+            <li>Docente Colaborador (DC)</li>
+            <li>Docente Permanente Ajustado (DPA)</li>
+            <li>Docente Colaborador Ajustado (DCA)</li>
+            <li>Aluno Regular (AR)</li>
+            <li>Outras categorias de aluno</li>
+            <li>Total de Alunos Matriculados</li>
+            <li>Orientandos por Docente Permanente Ajustado</li>
+            <li>Créditos de Disciplinas Ministradas no PPG</li>
+            <li>Créditos de Disciplinas Ministradas por Docente Visitante Estrangeiro</li>
+            <li>Créditos de Disciplinas Ministradas por Docente Visitante Brasileiro</li>
+            <li>Créditos de Disciplinas Ministradas por Bolsista de Pós-Doutorado</li>
+            <li>Média de Horas em Sala de Aula por Docente Permanente</li>
+            </ul>
+            
+            <p><strong>Observações:</strong></p>
+            <ul>
+            <li>Data de corte para a coleta dos dados:</li>
+            </ul>
+            <p>  - Dia 31 de março para indicadores do 1º semestre do ano</p>
+            <p>  - Dia 31 de agosto para indicadores do 2º semestre do ano</p>
+            <ul>
+            <li>Os indicadores são oriundos das informações registrados no SIPOS (Sistema da Pós-Graduação Stricto Sensu) e no CP (Controle de Professores). Portanto, registro correto dos dados nos sistemas é fundamental.</li>
+            </ul>
+            
+            <h4>2.1.8 Controle Acadêmico</h4>
+            
+            <p>O controle acadêmico do PPG abrange três aspectos: número de vagas ofertadas pelo PPG a cada processo seletivo, número de créditos em disciplinas oferecidos semestralmente pelo PPG e a planilha de atuação docente na Universidade.</p>
+            
+            <h5>2.1.8.1 Número de Vagas para Ingresso</h5>
+            
+            <p>A capacidade de orientação de cada área de concentração e/ou linha de pesquisa do PPG, bem como a compatibilidade com a capacidade de absorção de discentes pelos orientadores, segundo critérios definidos pela CAPES, são observados para que seja definido o número de vagas ofertadas em cada PPG. Conforme Art. 107 do Regimento Geral da Universidade, a admissão de candidatos aos PPGs deve estar condicionada à capacidade de orientação dos docentes permanentes e colaboradores em cada Programa.</p>
+            
+            <p>O número de vagas ofertadas nos cursos de Mestrado e de Doutorado é informado nos Editais de Processo Seletivo dos PPGs.</p>
+            
+            <h5>2.1.8.2 Créditos Oferecidos via Disciplinas</h5>
+            
+            <p>As disciplinas que compõem a estrutura curricular dos PPGs são contabilizadas em créditos, sendo que cada crédito equivale a 15 horas-aula, excluindo-se os créditos de disciplinas transversais, de segunda turma e de turmas ministradas por professor visitante ou bolsista PNPD.</p>
+            
+            <p>O número máximo de créditos ofertados no semestre, incluindo disciplinas obrigatórias e eletivas, é de 24 créditos para PPGs que oferecem apenas o nível de Mestrado, e de 36 créditos para PPGs que oferecem Mestrado e Doutorado. PPGs com Mestrado e Doutorado, com número de alunos regularmente matriculados superior a 120, podem oferecer até 40 créditos em disciplinas, no semestre.</p>
+            
+            <h4>2.1.9 Comissões Examinadoras</h4>
+            
+            <p>As comissões examinadoras de dissertações de mestrado e de teses de doutorado são compostas por docentes qualificados e com produção acadêmica-científica de relevância associada ao tema da dissertação ou tese, integrantes do próprio PPG, no caso de membros internos, ou de outros PPGs da própria Universidade ou de outras Instituições de Ensino Superior nacionais ou internacionais, no caso de membros externos.</p>
+            
+            <p>**Comissões de Mestrado:** Conforme Art. 115 do Regimento Geral da Universidade, as comissões examinadoras de dissertações de Mestrado são constituídas de, no mínimo, 2 (dois) doutores, ou título equivalente, sendo pelo menos 1 (um) deles externo ao programa. O orientador integra a comissão examinadora, que a preside, mas não avalia.</p>
+            
+            <p>**Comissões de Doutorado:** Conforme Art. 116 do Regimento Geral da Universidade, as comissões examinadoras de teses de Doutorado são constituídas de, no mínimo, 03 (três) doutores, sendo 02 (dois) examinadores de outros programas e pelo menos um destes externo à Universidade. O orientador integra a comissão examinadora, que a preside, mas não avalia.</p>
+            
+            <p>A nomeação dos membros das comissões examinadoras de dissertações e teses é feita pelo Coordenador do PPG. O Coordenador do PPG deverá formalizar o convite aos membros das comissões examinadoras emitindo Carta Convite.</p>
+            
+            <p><strong>Observações:</strong></p>
+            <ul>
+            <li>Na ausência do orientador, a Comissão Coordenadora do PPG deverá designar um de seus membros para presidir a apresentação ou defesa públicas</li>
+            <li>O coorientador, formalmente aprovado pela Câmara de Pesquisa e Pós-Graduação/Diretoria de Pós-Graduação, pode integrar a comissão examinadora, mas não avalia a dissertação ou tese</li>
+            </ul>
+            
+            <p>---</p>
+            
+            </section>
+            
+            
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Secretaria do PPGCOM. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        const SENHA_CORRETA = "@Famecos";
+
+        function login() {
+            const password = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (password === SENHA_CORRETA) {
+                localStorage.setItem('ppgcom_autenticado', 'true');
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContent').classList.add('show');
+                errorMessage.style.display = 'none';
+                showSection('alunos');
+            } else {
+                errorMessage.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('ppgcom_autenticado');
+            document.getElementById('loginContainer').style.display = 'flex';
+            document.getElementById('mainContent').classList.remove('show');
+            document.getElementById('passwordInput').value = '';
+        }
+
+        function showSection(sectionId) {
+            // Esconder todas as seções
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Mostrar a seção selecionada
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+            
+            // Scroll para o topo
+            window.scrollTo(0, 0);
+        }
+
+        // Verificar autenticação ao carregar a página
+        window.addEventListener('load', function() {
+            const autenticado = localStorage.getItem('ppgcom_autenticado');
+            if (autenticado === 'true') {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContent').classList.add('show');
+                showSection('alunos');
+            } else {
+                document.getElementById('loginContainer').style.display = 'flex';
+                document.getElementById('mainContent').classList.remove('show');
+            }
+        });
+
+        // Busca funcional
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const sections = document.querySelectorAll('.section');
+            
+            if (searchTerm === '') {
+                // Se a busca está vazia, mostrar a primeira seção
+                sections.forEach(section => section.classList.remove('active'));
+                if (sections.length > 0) sections[0].classList.add('active');
+                return;
+            }
+
+            let foundAny = false;
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    section.classList.add('active');
+                    foundAny = true;
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
